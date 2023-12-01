@@ -1,11 +1,12 @@
-import { BlockType } from "./blocks";
+import { EBlockShape, EBlockType } from "./blocks";
 export declare enum EBlockReplacingStrategy {
     DontReplace = 0,
     Replace = 1,
     OnlyReplace = 2
 }
 export interface IBlockPlacement {
-    blockType: BlockType;
+    blockType: EBlockType;
+    block_shape: EBlockShape;
     offset: number[];
 }
 export interface IBlocksGenerationRule {
@@ -35,8 +36,8 @@ export interface IBlockCreationRule {
     params: IBlockCreationSourceParams;
     replace: EBlockReplacingStrategy;
     stack?: boolean;
-    replaceInclude?: BlockType[];
-    replaceExclude?: BlockType[];
+    replaceInclude?: EBlockType[];
+    replaceExclude?: EBlockType[];
     levels: IBlockCreationLevels[];
 }
 export declare const rules: IBlocksGenerationRule[];

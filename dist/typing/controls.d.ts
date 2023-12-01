@@ -1,6 +1,5 @@
 import { PerspectiveCamera, Plane, Raycaster, Vector3 } from 'three';
 import { MapControls } from 'three/examples/jsm/controls/MapControls';
-import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
 export declare enum EBrickscapeControlsType {
     Eagle = 0,
     Hero = 1

@@ -1,20 +1,29 @@
 import { Group, InstancedMesh, InstancedBufferAttribute, Material, GridHelper } from "three";
 import { Task } from "./tasker";
+import { EBlockShape } from "./blocks";
 /**
  * Represents a single chunk in the world.
  */
 export declare class Chunk extends Group {
     static _chunksCounter: number;
-    static _baseInstancedMesh: any;
-    static _baseBlockMaterial: Material;
+    static _base_instanced_meshes: {
+        [key in EBlockShape]?: InstancedMesh;
+    };
+    static _base_block_material: Material;
     cx: number;
     cz: number;
     serial: number;
     _buildTask: Task;
     _built: boolean;
-    _instanceDataAttribute: InstancedBufferAttribute;
-    _instanceExtraDataAttribute: InstancedBufferAttribute;
-    _instancedMesh: InstancedMesh;
+    _instance_data_attribute: {
+        [key in EBlockShape]?: InstancedBufferAttribute;
+    };
+    _instance_extra_data_attribute: {
+        [key in EBlockShape]?: InstancedBufferAttribute;
+    };
+    _instanced_meshes: {
+        [key in EBlockShape]?: InstancedMesh;
+    };
     _gridHelper: GridHelper;
     /**
      * The x-coordinate of the first block in the chunk.
@@ -36,6 +45,7 @@ export declare class Chunk extends Group {
      * Synchronize the chunk with the world.
      */
     sync(): void;
+    _init(cx: number, cz: number): Promise<void>;
     /**
      * Update the geometry of the chunk.
      * @param {boolean} updateAttrs - Whether to update the attributes.
@@ -48,7 +58,7 @@ export declare class Chunk extends Group {
      * @param {number} z - The z-coordinate of the block.
      * @returns {number} - The computed instance index.
      */
-    _computedInstanceIndex(x: any, y: any, z: any): number;
+    _compute_instance_index(x: any, y: any, z: any): number;
     /**
      * Deallocate resources and clean up the chunk.
      */
@@ -73,7 +83,7 @@ export declare class Chunk extends Group {
      * @param {number} z - The z-coordinate of the block.
      * @returns {number} - The computed instance index.
      */
-    static computedInstanceIndex(bx0: any, bz0: any, x: any, y: any, z: any): number;
+    static compute_instance_index(bx0: any, bz0: any, x: any, y: any, z: any): number;
     /**
      * Load a chunk with the specified coordinates.
      * @param {number} cx - The x-coordinate of the chunk.
@@ -90,5 +100,5 @@ export declare class Chunk extends Group {
      * Create the base instanced mesh for rendering blocks.
      * @returns {InstancedMesh} - The instanced mesh.
      */
-    static _createInstancedMesh(): InstancedMesh;
+    static _create_instanced_mesh(block_shape: EBlockShape): Promise<InstancedMesh>;
 }

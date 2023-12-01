@@ -1,8 +1,8 @@
-# brickscape
+# timberhex
 
-[Demo](https://sanyabeast.github.io/brickscape/dist/)
+[Demo](https://sanyabeast.github.io/timberhex/dist/)
 
-[Info](https://sanyabeast.github.io/chronicle/dist/index.html#/applet/brickscape_demo)
+[Info](https://sanyabeast.github.io/chronicle/dist/index.html#/applet/timberhex_demo)
 
 ## basic project management
 ```

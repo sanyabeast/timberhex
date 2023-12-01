@@ -3,7 +3,7 @@ import { GenerationHelper } from "./generator";
 import { IBrickscapeControls } from "./controls";
 import { Tasker } from "./tasker";
 import { MapManager } from "./map";
-import { BlockManager, BlockShape } from "./blocks";
+import { BlockManager } from "./blocks";
 import { WorldManager } from "./world";
 import { RenderingHelper } from "./renderer";
 export declare enum FeatureLevel {
@@ -18,7 +18,6 @@ interface IAppState {
     seed: number;
     chunkSize: number;
     drawChunks: number;
-    blockShape: BlockShape;
     worldHeight: number;
     map: MapManager;
     controls: IBrickscapeControls;

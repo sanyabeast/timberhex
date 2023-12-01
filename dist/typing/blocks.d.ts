@@ -4,23 +4,25 @@ export type FBlocksGridIteratee = (x: number, y: number, z: number, block?: Bloc
 export type FBlocksGridIterateeXZ = (x: number, z: number) => void;
 export type FChunkGridIteratee = (x: number, y: number, z: number, block?: Block) => void;
 export type FChunkGridIterateeXZ = (x: number, z: number) => void;
-export declare enum BlockShape {
+export declare enum EBlockShape {
     Cube = 0,
-    Prism6 = 1
+    Prism6 = 1,
+    Tree01 = 2,
+    House01 = 3,
+    Ship01 = 4
 }
-export declare enum BlockType {
+export declare const BLOCK_SHAPES: EBlockShape[];
+export declare enum EBlockType {
     None = 0,
     Bedrock = 1,
-    Gravel = 2,
-    Rock = 3,
-    Dirt = 4,
+    Rock = 2,
+    Dirt = 3,
+    Grass = 4,
     Sand = 5,
     Water = 6,
-    Pumpkin = 7,
-    Wood = 8,
-    Leaves = 9,
-    Grass = 10,
-    Bamboo = 11
+    Tree = 7,
+    House = 8,
+    Ship = 9
 }
 export interface IBlockDescriptor {
     tile: number[];
@@ -33,12 +35,13 @@ export interface IBlockTable {
 }
 export declare const blockTable: IBlockTable;
 export declare class Block {
-    static getShapeGeometry(): InstancedBufferGeometry;
+    static get_shape_geometry(block_shape: EBlockShape): Promise<InstancedBufferGeometry>;
     bx: number;
     by: number;
     bz: number;
     bid: string;
-    btype: BlockType;
+    btype: EBlockType;
+    shape: EBlockShape;
     lightness: number;
     serial: number;
     needsUpdate: boolean;
@@ -46,13 +49,14 @@ export declare class Block {
     get tileY(): number;
     get isLightSource(): boolean;
     get tangibility(): number;
-    constructor({ x, y, z, chunk, lightness, blockType }: {
+    constructor({ x, y, z, chunk, lightness, blockType, shape }: {
         x: any;
         y: any;
         z: any;
         chunk: any;
         lightness: any;
         blockType: any;
+        shape: any;
     });
     kill(): void;
     iterateSiblings(distance: number, iteratee: FSiblingIteratee): void;
@@ -79,7 +83,7 @@ export declare class BlockManager {
     getTangibilityAtPosition(x: number, y: number, z: number): number;
     get maxBlocksPerChunk(): number;
     iterateGridXZ(fx: number, fz: number, tx: number, tz: number, iteratee: FBlocksGridIterateeXZ): void;
-    traverseChunk(cx: number, cz: number, iteratee: FChunkGridIteratee): void;
+    traverse_chunk(cx: number, cz: number, iteratee: FChunkGridIteratee): void;
     traverseChunk2D(cx: number, cz: number, iteratee: FChunkGridIterateeXZ): void;
     markBlocksUpdated(cx: number, cz: number): void;
     countBlocksNeedUpdate(cx: number, cz: number): number;

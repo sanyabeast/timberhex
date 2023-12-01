@@ -17338,106 +17338,156 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   BLOCK_SHAPES: () => (/* binding */ BLOCK_SHAPES),
 /* harmony export */   Block: () => (/* binding */ Block),
 /* harmony export */   BlockManager: () => (/* binding */ BlockManager),
-/* harmony export */   BlockShape: () => (/* binding */ BlockShape),
-/* harmony export */   BlockType: () => (/* binding */ BlockType),
+/* harmony export */   EBlockShape: () => (/* binding */ EBlockShape),
+/* harmony export */   EBlockType: () => (/* binding */ EBlockType),
 /* harmony export */   blockManager: () => (/* binding */ blockManager),
 /* harmony export */   blockTable: () => (/* binding */ blockTable)
 /* harmony export */ });
-/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
+/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./state */ "./src/state.ts");
+/* harmony import */ var three_examples_jsm_loaders_OBJLoader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three/examples/jsm/loaders/OBJLoader */ "./node_modules/three/examples/jsm/loaders/OBJLoader.js");
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 
 
+
+const loader = new three_examples_jsm_loaders_OBJLoader__WEBPACK_IMPORTED_MODULE_1__.OBJLoader();
 let _blocksCounter = 0;
 let _blockManager = null;
-var BlockShape;
-(function (BlockShape) {
-    BlockShape[BlockShape["Cube"] = 0] = "Cube";
-    BlockShape[BlockShape["Prism6"] = 1] = "Prism6";
-})(BlockShape || (BlockShape = {}));
-var BlockType;
-(function (BlockType) {
-    BlockType[BlockType["None"] = 0] = "None";
-    BlockType[BlockType["Bedrock"] = 1] = "Bedrock";
-    BlockType[BlockType["Gravel"] = 2] = "Gravel";
-    BlockType[BlockType["Rock"] = 3] = "Rock";
-    BlockType[BlockType["Dirt"] = 4] = "Dirt";
-    BlockType[BlockType["Sand"] = 5] = "Sand";
-    BlockType[BlockType["Water"] = 6] = "Water";
-    BlockType[BlockType["Pumpkin"] = 7] = "Pumpkin";
-    BlockType[BlockType["Wood"] = 8] = "Wood";
-    BlockType[BlockType["Leaves"] = 9] = "Leaves";
-    BlockType[BlockType["Grass"] = 10] = "Grass";
-    BlockType[BlockType["Bamboo"] = 11] = "Bamboo";
-})(BlockType || (BlockType = {}));
+var EBlockShape;
+(function (EBlockShape) {
+    EBlockShape[EBlockShape["Cube"] = 0] = "Cube";
+    EBlockShape[EBlockShape["Prism6"] = 1] = "Prism6";
+    EBlockShape[EBlockShape["Tree01"] = 2] = "Tree01";
+    EBlockShape[EBlockShape["House01"] = 3] = "House01";
+    EBlockShape[EBlockShape["Ship01"] = 4] = "Ship01";
+})(EBlockShape || (EBlockShape = {}));
+const BLOCK_SHAPES = [
+    EBlockShape.Cube,
+    EBlockShape.Prism6,
+    EBlockShape.Tree01,
+    EBlockShape.House01,
+    EBlockShape.Ship01
+];
+var EBlockType;
+(function (EBlockType) {
+    EBlockType[EBlockType["None"] = 0] = "None";
+    EBlockType[EBlockType["Bedrock"] = 1] = "Bedrock";
+    EBlockType[EBlockType["Rock"] = 2] = "Rock";
+    EBlockType[EBlockType["Dirt"] = 3] = "Dirt";
+    EBlockType[EBlockType["Grass"] = 4] = "Grass";
+    EBlockType[EBlockType["Sand"] = 5] = "Sand";
+    EBlockType[EBlockType["Water"] = 6] = "Water";
+    EBlockType[EBlockType["Tree"] = 7] = "Tree";
+    EBlockType[EBlockType["House"] = 8] = "House";
+    EBlockType[EBlockType["Ship"] = 9] = "Ship";
+})(EBlockType || (EBlockType = {}));
 const blockTable = {
-    [BlockType.None]: {
+    [EBlockType.None]: {
         tile: [0, 0],
         tangibility: 1
     },
-    [BlockType.Gravel]: {
-        tile: [0, 0],
-        tangibility: 1
-    },
-    [BlockType.Rock]: {
+    [EBlockType.Rock]: {
         tile: [0, 1],
         tangibility: 1
     },
-    [BlockType.Dirt]: {
+    [EBlockType.Dirt]: {
         tile: [2, 0],
         tangibility: 1
     },
-    [BlockType.Sand]: {
+    [EBlockType.Grass]: {
+        tile: [1, 0],
+        tangibility: 1
+    },
+    [EBlockType.Sand]: {
         tile: [2, 1],
         tangibility: 1
     },
-    [BlockType.Bedrock]: {
+    [EBlockType.Tree]: {
+        tile: [0, 3],
+        tangibility: 1
+    },
+    [EBlockType.Ship]: {
+        tile: [2, 3],
+        tangibility: 1
+    },
+    [EBlockType.House]: {
+        tile: [2, 3],
+        tangibility: 1
+    },
+    [EBlockType.Bedrock]: {
         tile: [1, 1],
         tangibility: 1
     },
-    [BlockType.Water]: {
+    [EBlockType.Water]: {
         tile: [15, 13],
         tangibility: 0.5,
         animation: true,
     },
-    [BlockType.Pumpkin]: {
-        tile: [8, 7],
-        light: true,
-        tangibility: 1
-    },
-    [BlockType.Wood]: {
-        tile: [4, 1],
-        tangibility: 0
-    },
-    [BlockType.Leaves]: {
-        tile: [0, 3],
-        tangibility: 0
-    },
-    [BlockType.Grass]: {
-        tile: [12, 5],
-        tangibility: 0
-    },
-    [BlockType.Bamboo]: {
-        tile: [9, 4],
-        tangibility: 0,
-    }
 };
 class Block {
-    static getShapeGeometry() {
-        switch (_state__WEBPACK_IMPORTED_MODULE_0__.state.blockShape) {
-            case BlockShape.Prism6: {
-                let g = new three__WEBPACK_IMPORTED_MODULE_1__.CylinderGeometry(1, 1, 1, 6);
-                g.scale(1 / 1.732, 1, 1 / 1.5);
-                return g;
+    static get_shape_geometry(block_shape) {
+        return __awaiter(this, void 0, void 0, function* () {
+            switch (block_shape) {
+                // case EBlockShape.Prism6: {
+                //     let g = new CylinderGeometry(1, 1, 0.5, 6) as any as InstancedBufferGeometry
+                //     g.scale(1 / 1.732, 1, 1 / 1.5);
+                //     return g;
+                // }
+                case EBlockShape.Prism6: {
+                    let g = yield new Promise((resolve, reject) => {
+                        loader.load('assets/models/prism6.obj', (obj) => {
+                            let g = obj.children[0].geometry;
+                            resolve(g);
+                        });
+                    });
+                    return g;
+                }
+                case EBlockShape.Tree01: {
+                    let g = yield new Promise((resolve, reject) => {
+                        loader.load('assets/models/tree_01.obj', (obj) => {
+                            let g = obj.children[0].geometry;
+                            resolve(g);
+                        });
+                    });
+                    return g;
+                }
+                case EBlockShape.House01: {
+                    let g = yield new Promise((resolve, reject) => {
+                        loader.load('assets/models/house_01.obj', (obj) => {
+                            let g = obj.children[0].geometry;
+                            resolve(g);
+                        });
+                    });
+                    return g;
+                }
+                case EBlockShape.Ship01: {
+                    let g = yield new Promise((resolve, reject) => {
+                        loader.load('assets/models/ship_01.obj', (obj) => {
+                            let g = obj.children[0].geometry;
+                            resolve(g);
+                        });
+                    });
+                    return g;
+                }
+                default: {
+                    let g = new three__WEBPACK_IMPORTED_MODULE_2__.BoxGeometry(1, 1, 1);
+                    console.log(g);
+                    g.translate(0, 0.5, 0);
+                    return g;
+                }
             }
-            default: {
-                let g = new three__WEBPACK_IMPORTED_MODULE_1__.BoxGeometry(1, 1, 1);
-                console.log(g);
-                g.translate(0, 0.5, 0);
-                return g;
-            }
-        }
+        });
     }
     get tileX() {
         return blockTable[this.btype].tile[0];
@@ -17451,12 +17501,13 @@ class Block {
     get tangibility() {
         return blockTable[this.btype].tangibility;
     }
-    constructor({ x, y, z, chunk, lightness, blockType }) {
+    constructor({ x, y, z, chunk, lightness, blockType, shape }) {
         this.bx = null;
         this.by = null;
         this.bz = null;
         this.bid = null;
-        this.btype = BlockType.None;
+        this.btype = EBlockType.None;
+        this.shape = EBlockShape.Cube;
         // instanceIndex: number = null
         this.lightness = 1;
         this.serial = null;
@@ -17468,6 +17519,7 @@ class Block {
         this.by = y;
         this.bz = z;
         this.bid = _blockManager.getBlockId(x, y, z);
+        this.shape = shape;
         this.serial = _blocksCounter;
         _blocksCounter++;
         _blockManager.setBlock(this);
@@ -17592,7 +17644,7 @@ class BlockManager {
             }
         }
     }
-    traverseChunk(cx, cz, iteratee) {
+    traverse_chunk(cx, cz, iteratee) {
         for (let z = 0; z < _state__WEBPACK_IMPORTED_MODULE_0__.state.chunkSize; z++) {
             for (let x = 0; x < _state__WEBPACK_IMPORTED_MODULE_0__.state.chunkSize; x++) {
                 for (let y = 0; y < _state__WEBPACK_IMPORTED_MODULE_0__.state.worldHeight; y++) {
@@ -17605,7 +17657,7 @@ class BlockManager {
         this.iterateGridXZ(cx * _state__WEBPACK_IMPORTED_MODULE_0__.state.chunkSize, cz * _state__WEBPACK_IMPORTED_MODULE_0__.state.chunkSize, cx * _state__WEBPACK_IMPORTED_MODULE_0__.state.chunkSize + _state__WEBPACK_IMPORTED_MODULE_0__.state.chunkSize, cz * _state__WEBPACK_IMPORTED_MODULE_0__.state.chunkSize + _state__WEBPACK_IMPORTED_MODULE_0__.state.chunkSize, iteratee);
     }
     markBlocksUpdated(cx, cz) {
-        blockManager.traverseChunk(cx, cz, (x, y, z, block) => {
+        blockManager.traverse_chunk(cx, cz, (x, y, z, block) => {
             if (block) {
                 block.needsUpdate = false;
             }
@@ -17613,7 +17665,7 @@ class BlockManager {
     }
     countBlocksNeedUpdate(cx, cz) {
         let i = 0;
-        blockManager.traverseChunk(cx, cz, (x, y, z, block) => {
+        blockManager.traverse_chunk(cx, cz, (x, y, z, block) => {
             if (block && block.needsUpdate) {
                 i++;
             }
@@ -17647,6 +17699,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _gui__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./gui */ "./src/gui.ts");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_6__);
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 
 
 
@@ -17656,9 +17717,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 // Pool of chunk objects for reusability
-const _chunkPool = [];
+const _chunks_pool = [];
 // Maximum size limit of the chunk pool
-const _chunkPoolLimit = 100;
+const _chunks_pool_limit = 100;
 /**
  * Represents a single chunk in the world.
  */
@@ -17687,23 +17748,10 @@ class Chunk extends three__WEBPACK_IMPORTED_MODULE_7__.Group {
         this.serial = null;
         this._buildTask = null;
         this._built = false;
-        this._instanceDataAttribute = null;
-        this._instanceExtraDataAttribute = null;
-        this._instancedMesh = null;
-        this.serial = Chunk._chunksCounter;
-        Chunk._chunksCounter++;
-        this.matrixAutoUpdate = false;
-        // Create instanced mesh for rendering blocks
-        this._instancedMesh = Chunk._createInstancedMesh();
-        this._instanceDataAttribute = this._instancedMesh.geometry.attributes['instanceData'];
-        this._instanceExtraDataAttribute = this._instancedMesh.geometry.attributes['instanceExtraData'];
-        this.add(this._instancedMesh);
-        // Create grid helper for visual debugging
-        this._gridHelper = new three__WEBPACK_IMPORTED_MODULE_7__.GridHelper(_state__WEBPACK_IMPORTED_MODULE_1__.state.chunkSize, _state__WEBPACK_IMPORTED_MODULE_1__.state.chunkSize, 0x999999, 0x999999);
-        this._gridHelper.position.set(_state__WEBPACK_IMPORTED_MODULE_1__.state.chunkSize / 2 - 0.5, 0, _state__WEBPACK_IMPORTED_MODULE_1__.state.chunkSize / 2 - 0.5);
-        this.add(this._gridHelper);
-        this.setup(cx, cz);
-        this._updateGeometry = (0,lodash__WEBPACK_IMPORTED_MODULE_6__.debounce)(this._updateGeometry.bind(this), 1000);
+        this._instance_data_attribute = {};
+        this._instance_extra_data_attribute = {};
+        this._instanced_meshes = {};
+        this._init(cx, cz);
     }
     /**
      * Synchronize the chunk with the world.
@@ -17712,31 +17760,58 @@ class Chunk extends three__WEBPACK_IMPORTED_MODULE_7__.Group {
         (0,_utils__WEBPACK_IMPORTED_MODULE_0__.logd)('Chunk.sync', this.toString());
         this._updateGeometry(true);
     }
+    _init(cx, cz) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.serial = Chunk._chunksCounter;
+            Chunk._chunksCounter++;
+            this.matrixAutoUpdate = false;
+            _blocks__WEBPACK_IMPORTED_MODULE_3__.BLOCK_SHAPES.forEach((block_shape) => __awaiter(this, void 0, void 0, function* () {
+                this._instanced_meshes[block_shape] = yield Chunk._create_instanced_mesh(block_shape);
+                this._instance_data_attribute[block_shape] = this._instanced_meshes[block_shape].geometry.attributes['instanceData'];
+                this._instance_extra_data_attribute[block_shape] = this._instanced_meshes[block_shape].geometry.attributes['instanceExtraData'];
+                this.add(this._instanced_meshes[block_shape]);
+            }));
+            console.log(this);
+            // Create grid helper for visual debugging
+            this._gridHelper = new three__WEBPACK_IMPORTED_MODULE_7__.GridHelper(_state__WEBPACK_IMPORTED_MODULE_1__.state.chunkSize, _state__WEBPACK_IMPORTED_MODULE_1__.state.chunkSize, 0x999999, 0x999999);
+            this._gridHelper.position.set(_state__WEBPACK_IMPORTED_MODULE_1__.state.chunkSize / 2 - 0.5, 0, _state__WEBPACK_IMPORTED_MODULE_1__.state.chunkSize / 2 - 0.5);
+            this.add(this._gridHelper);
+            this.setup(cx, cz);
+            this._updateGeometry = (0,lodash__WEBPACK_IMPORTED_MODULE_6__.debounce)(this._updateGeometry.bind(this), 1000);
+        });
+    }
     /**
      * Update the geometry of the chunk.
      * @param {boolean} updateAttrs - Whether to update the attributes.
      */
     _updateGeometry(updateAttrs = false) {
         if (updateAttrs) {
-            let _blocksInChunk = 0;
-            _blocks__WEBPACK_IMPORTED_MODULE_3__.blockManager.traverseChunk(this.cx, this.cz, (x, y, z, block) => {
-                let instanceIndex = this._computedInstanceIndex(x, y, z);
+            let _blocks_in_chunk = 0;
+            _blocks__WEBPACK_IMPORTED_MODULE_3__.blockManager.traverse_chunk(this.cx, this.cz, (x, y, z, block) => {
+                let isntance_index = this._compute_instance_index(x, y, z);
+                _blocks__WEBPACK_IMPORTED_MODULE_3__.BLOCK_SHAPES.forEach(block_shape => {
+                    this._instance_extra_data_attribute[block_shape].setX(isntance_index, 0);
+                });
+            });
+            _blocks__WEBPACK_IMPORTED_MODULE_3__.blockManager.traverse_chunk(this.cx, this.cz, (x, y, z, block) => {
+                let isntance_index = this._compute_instance_index(x, y, z);
                 if (block) {
-                    _blocksInChunk++;
-                    this._instanceExtraDataAttribute.setX(instanceIndex, 1);
+                    _blocks_in_chunk++;
+                    this._instance_extra_data_attribute[block.shape].setX(isntance_index, 1);
                     let animSpeed = _blocks__WEBPACK_IMPORTED_MODULE_3__.blockTable[block.btype].animation === true ? 1 : 0;
-                    this._instanceExtraDataAttribute.setY(instanceIndex, animSpeed);
-                    this._instanceDataAttribute.setXYZ(instanceIndex, block.tileX, block.tileY, block.lightness);
-                }
-                else {
-                    this._instanceExtraDataAttribute.setX(instanceIndex, 0);
+                    this._instance_extra_data_attribute[block.shape].setY(isntance_index, animSpeed);
+                    this._instance_data_attribute[block.shape].setXYZ(isntance_index, block.tileX, block.tileY, block.lightness);
                 }
             });
-            this._instanceExtraDataAttribute.needsUpdate = true;
-            this._instanceDataAttribute.needsUpdate = true;
+            _blocks__WEBPACK_IMPORTED_MODULE_3__.BLOCK_SHAPES.forEach(block_shape => {
+                this._instance_extra_data_attribute[block_shape].needsUpdate = true;
+                this._instance_data_attribute[block_shape].needsUpdate = true;
+            });
         }
-        this._instancedMesh.instanceMatrix.needsUpdate = true;
-        this.updateMatrix();
+        _blocks__WEBPACK_IMPORTED_MODULE_3__.BLOCK_SHAPES.forEach(block_shape => {
+            this._instanced_meshes[block_shape].instanceMatrix.needsUpdate = true;
+            this.updateMatrix();
+        });
     }
     /**
      * Compute the instance index based on the block coordinates.
@@ -17745,15 +17820,17 @@ class Chunk extends three__WEBPACK_IMPORTED_MODULE_7__.Group {
      * @param {number} z - The z-coordinate of the block.
      * @returns {number} - The computed instance index.
      */
-    _computedInstanceIndex(x, y, z) {
-        return Chunk.computedInstanceIndex(this.bx0, this.bz0, x, y, z);
+    _compute_instance_index(x, y, z) {
+        return Chunk.compute_instance_index(this.bx0, this.bz0, x, y, z);
     }
     /**
      * Deallocate resources and clean up the chunk.
      */
     kill() {
-        if (this._instancedMesh) {
-            this._instancedMesh.geometry.dispose();
+        for (let block_shape in _blocks__WEBPACK_IMPORTED_MODULE_3__.EBlockShape) {
+            this.remove(this._instanced_meshes[block_shape]);
+            this._instanced_meshes[block_shape].geometry.dispose();
+            this._instanced_meshes[block_shape].material.dispose();
         }
     }
     /**
@@ -17789,7 +17866,7 @@ class Chunk extends three__WEBPACK_IMPORTED_MODULE_7__.Group {
      * @param {number} z - The z-coordinate of the block.
      * @returns {number} - The computed instance index.
      */
-    static computedInstanceIndex(bx0, bz0, x, y, z) {
+    static compute_instance_index(bx0, bz0, x, y, z) {
         return Math.floor((x - bx0) + _state__WEBPACK_IMPORTED_MODULE_1__.state.chunkSize * (y + _state__WEBPACK_IMPORTED_MODULE_1__.state.worldHeight * (z - bz0)));
     }
     /**
@@ -17799,7 +17876,7 @@ class Chunk extends three__WEBPACK_IMPORTED_MODULE_7__.Group {
      * @returns {Chunk} - The loaded chunk object.
      */
     static load(cx, cz) {
-        let chunk = _chunkPool.pop();
+        let chunk = _chunks_pool.pop();
         if (chunk === undefined) {
             chunk = new Chunk({ cx, cz });
             (0,_utils__WEBPACK_IMPORTED_MODULE_0__.logd)('Chunk:load    ', `loading new chunk ${chunk.toString()}`);
@@ -17809,7 +17886,7 @@ class Chunk extends three__WEBPACK_IMPORTED_MODULE_7__.Group {
             (0,_utils__WEBPACK_IMPORTED_MODULE_0__.logd)('Chunk:load', `loading from pool ${chunk.toString()}`);
         }
         chunk.visible = true;
-        _gui__WEBPACK_IMPORTED_MODULE_5__.monitoringData.chunksPoolSize = _chunkPool.length.toString();
+        _gui__WEBPACK_IMPORTED_MODULE_5__.monitoringData.chunksPoolSize = _chunks_pool.length.toString();
         return chunk;
     }
     /**
@@ -17817,75 +17894,80 @@ class Chunk extends three__WEBPACK_IMPORTED_MODULE_7__.Group {
      * @param {Chunk} chunk - The chunk object to unload.
      */
     static unload(chunk) {
-        if (_chunkPool.length < _chunkPoolLimit) {
+        if (_chunks_pool.length < _chunks_pool_limit) {
             (0,_utils__WEBPACK_IMPORTED_MODULE_0__.logd)('Chunk:unload', `unloading to pool ${chunk.toString()}`);
-            _chunkPool.push(chunk);
+            _chunks_pool.push(chunk);
         }
         chunk.visible = true;
-        _gui__WEBPACK_IMPORTED_MODULE_5__.monitoringData.chunksPoolSize = _chunkPool.length.toString();
+        _gui__WEBPACK_IMPORTED_MODULE_5__.monitoringData.chunksPoolSize = _chunks_pool.length.toString();
     }
     /**
      * Create the base instanced mesh for rendering blocks.
      * @returns {InstancedMesh} - The instanced mesh.
      */
-    static _createInstancedMesh() {
-        if (Chunk._baseInstancedMesh === null) {
-            // Create base instanced block geometry and attributes
-            const _instancedBlockGeometry = new three__WEBPACK_IMPORTED_MODULE_7__.InstancedBufferGeometry().copy(_blocks__WEBPACK_IMPORTED_MODULE_3__.Block.getShapeGeometry());
-            const _instanceDataArray = new Float32Array(_blocks__WEBPACK_IMPORTED_MODULE_3__.blockManager.maxBlocksPerChunk * 3);
-            const _instanceDataAttribute = new three__WEBPACK_IMPORTED_MODULE_7__.InstancedBufferAttribute(_instanceDataArray, 3);
-            const _instaneExtraDataArray = new Float32Array(_blocks__WEBPACK_IMPORTED_MODULE_3__.blockManager.maxBlocksPerChunk * 3);
-            const _instanceExtraDataAttribute = new three__WEBPACK_IMPORTED_MODULE_7__.InstancedBufferAttribute(_instaneExtraDataArray, 3);
-            // Get the base block material
-            Chunk._baseBlockMaterial = Chunk._baseBlockMaterial || (0,_shaders__WEBPACK_IMPORTED_MODULE_2__.getBlockBaseMaterial)();
-            for (let i = 0; i < _blocks__WEBPACK_IMPORTED_MODULE_3__.blockManager.maxBlocksPerChunk; i++) {
-                _instanceDataAttribute.setXYZ(i, 0, 0, 1);
-                _instanceExtraDataAttribute.setX(i, 0);
-            }
-            // Set instance attributes to the instanced geometry
-            _instancedBlockGeometry.setAttribute('instanceData', _instanceDataAttribute);
-            _instancedBlockGeometry.setAttribute('instanceExtraData', _instanceExtraDataAttribute);
-            // Create the base instanced mesh
-            Chunk._baseInstancedMesh = new three__WEBPACK_IMPORTED_MODULE_7__.InstancedMesh(_instancedBlockGeometry, Chunk._baseBlockMaterial, _blocks__WEBPACK_IMPORTED_MODULE_3__.blockManager.maxBlocksPerChunk);
-            for (let x = 0; x < _state__WEBPACK_IMPORTED_MODULE_1__.state.chunkSize; x++) {
-                for (let z = 0; z < _state__WEBPACK_IMPORTED_MODULE_1__.state.chunkSize; z++) {
-                    for (let y = 0; y < _state__WEBPACK_IMPORTED_MODULE_1__.state.worldHeight; y++) {
-                        let dummy = new three__WEBPACK_IMPORTED_MODULE_7__.Object3D();
-                        switch (_state__WEBPACK_IMPORTED_MODULE_1__.state.blockShape) {
-                            case _blocks__WEBPACK_IMPORTED_MODULE_3__.BlockShape.Prism6: {
-                                let dx = x;
-                                if (z % 2 == 0) {
-                                    dx += 0.5;
+    static _create_instanced_mesh(block_shape) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if ((0,lodash__WEBPACK_IMPORTED_MODULE_6__.isUndefined)(Chunk._base_instanced_meshes[block_shape])) {
+                // Create base instanced block geometry and attributes
+                const _instanced_block_geometry = new three__WEBPACK_IMPORTED_MODULE_7__.InstancedBufferGeometry().copy(yield _blocks__WEBPACK_IMPORTED_MODULE_3__.Block.get_shape_geometry(block_shape));
+                const _instance_data_array = new Float32Array(_blocks__WEBPACK_IMPORTED_MODULE_3__.blockManager.maxBlocksPerChunk * 3);
+                const _instance_data_attribute = new three__WEBPACK_IMPORTED_MODULE_7__.InstancedBufferAttribute(_instance_data_array, 3);
+                const _instance_extra_data_array = new Float32Array(_blocks__WEBPACK_IMPORTED_MODULE_3__.blockManager.maxBlocksPerChunk * 3);
+                const _instance_extra_data_attribute = new three__WEBPACK_IMPORTED_MODULE_7__.InstancedBufferAttribute(_instance_extra_data_array, 3);
+                // Get the base block material
+                Chunk._base_block_material = Chunk._base_block_material || (0,_shaders__WEBPACK_IMPORTED_MODULE_2__.getBlockBaseMaterial)();
+                for (let i = 0; i < _blocks__WEBPACK_IMPORTED_MODULE_3__.blockManager.maxBlocksPerChunk; i++) {
+                    _instance_data_attribute.setXYZ(i, 0, 0, 1);
+                    _instance_extra_data_attribute.setX(i, 0);
+                }
+                // Set instance attributes to the instanced geometry
+                _instanced_block_geometry.setAttribute('instanceData', _instance_data_attribute);
+                _instanced_block_geometry.setAttribute('instanceExtraData', _instance_extra_data_attribute);
+                // Create the base instanced mesh
+                Chunk._base_instanced_meshes[block_shape] = new three__WEBPACK_IMPORTED_MODULE_7__.InstancedMesh(_instanced_block_geometry, Chunk._base_block_material, _blocks__WEBPACK_IMPORTED_MODULE_3__.blockManager.maxBlocksPerChunk);
+                for (let x = 0; x < _state__WEBPACK_IMPORTED_MODULE_1__.state.chunkSize; x++) {
+                    for (let z = 0; z < _state__WEBPACK_IMPORTED_MODULE_1__.state.chunkSize; z++) {
+                        for (let y = 0; y < _state__WEBPACK_IMPORTED_MODULE_1__.state.worldHeight; y++) {
+                            let dummy = new three__WEBPACK_IMPORTED_MODULE_7__.Object3D();
+                            switch (block_shape) {
+                                case _blocks__WEBPACK_IMPORTED_MODULE_3__.EBlockShape.Cube: {
+                                    dummy.position.set(x, y, z);
                                 }
-                                dummy.position.set(dx, y, z);
-                                break;
+                                default: {
+                                    let dx = x;
+                                    if (z % 2 == 0) {
+                                        dx += 0.5;
+                                    }
+                                    dummy.position.set(dx, y * 0.5, z);
+                                    if (block_shape != _blocks__WEBPACK_IMPORTED_MODULE_3__.EBlockShape.Prism6) {
+                                        dummy.rotation.set(0, (Math.random() * Math.PI * 2), 0);
+                                    }
+                                    break;
+                                }
                             }
-                            default: {
-                                dummy.position.set(x, y, z);
-                            }
+                            dummy.updateMatrix();
+                            Chunk._base_instanced_meshes[block_shape].setMatrixAt(Chunk.compute_instance_index(0, 0, x, y, z), dummy.matrix);
                         }
-                        dummy.updateMatrix();
-                        Chunk._baseInstancedMesh.setMatrixAt(Chunk.computedInstanceIndex(0, 0, x, y, z), dummy.matrix);
                     }
                 }
+                Chunk._base_instanced_meshes[block_shape].matrixAutoUpdate = false;
+                Chunk._base_instanced_meshes[block_shape].updateMatrix();
+                return Chunk._create_instanced_mesh(block_shape);
             }
-            Chunk._baseInstancedMesh.matrixAutoUpdate = false;
-            Chunk._baseInstancedMesh.updateMatrix();
-            return Chunk._createInstancedMesh();
-        }
-        else {
-            // Clone the base instanced mesh
-            let clonedInstancedMesh = Chunk._baseInstancedMesh.clone();
-            clonedInstancedMesh.geometry = Chunk._baseInstancedMesh.geometry.clone();
-            clonedInstancedMesh.matrixAutoUpdate = false;
-            clonedInstancedMesh.updateMatrix();
-            return clonedInstancedMesh;
-        }
+            else {
+                // Clone the base instanced mesh
+                let clonedInstancedMesh = Chunk._base_instanced_meshes[block_shape].clone();
+                clonedInstancedMesh.geometry = Chunk._base_instanced_meshes[block_shape].geometry.clone();
+                clonedInstancedMesh.matrixAutoUpdate = false;
+                clonedInstancedMesh.updateMatrix();
+                return clonedInstancedMesh;
+            }
+        });
     }
 }
 Chunk._chunksCounter = 0;
-Chunk._baseInstancedMesh = null;
-Chunk._baseBlockMaterial = null;
+Chunk._base_instanced_meshes = {};
+Chunk._base_block_material = null;
 
 
 /***/ }),
@@ -17900,22 +17982,14 @@ Chunk._baseBlockMaterial = null;
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   BrickscapeEagleControls: () => (/* binding */ BrickscapeEagleControls),
-/* harmony export */   BrickscapeHeroControls: () => (/* binding */ BrickscapeHeroControls),
 /* harmony export */   EBrickscapeControlsType: () => (/* binding */ EBrickscapeControlsType),
 /* harmony export */   getControlsOfType: () => (/* binding */ getControlsOfType),
 /* harmony export */   setActiveControls: () => (/* binding */ setActiveControls)
 /* harmony export */ });
-/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
-/* harmony import */ var three_examples_jsm_controls_MapControls__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! three/examples/jsm/controls/MapControls */ "./node_modules/three/examples/jsm/controls/MapControls.js");
-/* harmony import */ var three_examples_jsm_controls_PointerLockControls_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! three/examples/jsm/controls/PointerLockControls.js */ "./node_modules/three/examples/jsm/controls/PointerLockControls.js");
+/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
+/* harmony import */ var three_examples_jsm_controls_MapControls__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! three/examples/jsm/controls/MapControls */ "./node_modules/three/examples/jsm/controls/MapControls.js");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./state */ "./src/state.ts");
-/* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./blocks */ "./src/blocks.ts");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils */ "./src/utils.ts");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
-
-
-
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ "./src/utils.ts");
 
 
 
@@ -17925,27 +17999,27 @@ var EBrickscapeControlsType;
     EBrickscapeControlsType[EBrickscapeControlsType["Eagle"] = 0] = "Eagle";
     EBrickscapeControlsType[EBrickscapeControlsType["Hero"] = 1] = "Hero";
 })(EBrickscapeControlsType || (EBrickscapeControlsType = {}));
-class BrickscapeEagleControls extends three_examples_jsm_controls_MapControls__WEBPACK_IMPORTED_MODULE_4__.MapControls {
+class BrickscapeEagleControls extends three_examples_jsm_controls_MapControls__WEBPACK_IMPORTED_MODULE_2__.MapControls {
     static getInstance() {
         var _a;
         BrickscapeEagleControls.instance = (_a = BrickscapeEagleControls.instance) !== null && _a !== void 0 ? _a : new BrickscapeEagleControls();
         return BrickscapeEagleControls.instance;
     }
     constructor() {
-        let camera = new three__WEBPACK_IMPORTED_MODULE_5__.PerspectiveCamera(80, 1, 0.1, 1000);
+        let camera = new three__WEBPACK_IMPORTED_MODULE_3__.PerspectiveCamera(70, 1, 0.1, 1000);
         super(camera, _state__WEBPACK_IMPORTED_MODULE_0__.state.renderer.canvas);
         this.enabled = false;
-        this._groundPlane = new three__WEBPACK_IMPORTED_MODULE_5__.Plane(new three__WEBPACK_IMPORTED_MODULE_5__.Vector3(0, 1, 0), 0);
-        this._intersection = new three__WEBPACK_IMPORTED_MODULE_5__.Vector3();
-        this._raycaster = new three__WEBPACK_IMPORTED_MODULE_5__.Raycaster();
+        this._groundPlane = new three__WEBPACK_IMPORTED_MODULE_3__.Plane(new three__WEBPACK_IMPORTED_MODULE_3__.Vector3(0, 1, 0), 0);
+        this._intersection = new three__WEBPACK_IMPORTED_MODULE_3__.Vector3();
+        this._raycaster = new three__WEBPACK_IMPORTED_MODULE_3__.Raycaster();
         this._nearClip = 0.1;
         this._farClip = 1000;
         this.infoWidget = "eagle";
         this.camera = camera;
         this.screenSpacePanning = false;
-        this.minDistance = 20;
-        this.maxDistance = 100;
-        this.maxPolarAngle = (Math.PI / 2.5);
+        this.minDistance = 1;
+        this.maxDistance = 24;
+        this.maxPolarAngle = (Math.PI / 2.25);
         // this.maxPolarAngle = (Math.PI);
         this.enableDamping = false;
         this.dampingFactor = 0.005;
@@ -17967,233 +18041,22 @@ class BrickscapeEagleControls extends three_examples_jsm_controls_MapControls__W
         // throw new Error('Method not implemented.');
     }
     _getCameraLookIntersection(camera) {
-        this._raycaster.setFromCamera(new three__WEBPACK_IMPORTED_MODULE_5__.Vector2(0, 0), camera);
+        this._raycaster.setFromCamera(new three__WEBPACK_IMPORTED_MODULE_3__.Vector2(0, 0), camera);
         this._raycaster.ray.intersectPlane(this._groundPlane, this._intersection);
         return this._intersection;
     }
 }
-class BrickscapeHeroControls extends three_examples_jsm_controls_PointerLockControls_js__WEBPACK_IMPORTED_MODULE_6__.PointerLockControls {
-    static getInstance() {
-        var _a;
-        BrickscapeHeroControls.instance = (_a = BrickscapeHeroControls.instance) !== null && _a !== void 0 ? _a : new BrickscapeHeroControls();
-        return BrickscapeHeroControls.instance;
-    }
-    constructor() {
-        let camera = new three__WEBPACK_IMPORTED_MODULE_5__.PerspectiveCamera(60, 1, 0.001, 1000);
-        super(camera, _state__WEBPACK_IMPORTED_MODULE_0__.state.renderer.canvas);
-        this.infoWidget = "hero";
-        this._moveForward = false;
-        this._moveBackward = false;
-        this._moveLeft = false;
-        this._moveRight = false;
-        this._canJump = false;
-        this._onObject = false;
-        this._heroHeight = 2;
-        this._eyesElevation = 2;
-        this._walkVelocity = 30;
-        this._runVelocity = 60;
-        this._walkFov = 72;
-        this._runFov = 90;
-        this._jumpImpulse = 16;
-        this._fallingVelocity = 6;
-        this._currentFov = 80;
-        this._currentMovementVelocity = 0;
-        this.enabled = false;
-        this._bodyBlocksTangibility = [0, 0, 0, 0, 0];
-        this._velocity = new three__WEBPACK_IMPORTED_MODULE_5__.Vector3();
-        this._direction = new three__WEBPACK_IMPORTED_MODULE_5__.Vector3();
-        document.addEventListener('keydown', this._onKeyDown.bind(this));
-        document.addEventListener('keyup', this._onKeyUp.bind(this));
-        _state__WEBPACK_IMPORTED_MODULE_0__.state.renderer.canvas.addEventListener('click', () => {
-            if (this.enabled) {
-                this.lock();
-            }
-        });
-        this.addEventListener('lock', () => {
-            console.log(`locked`);
-        });
-        this.addEventListener('unlock', () => {
-            console.log(`unlocked`);
-        });
-        this._jump = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.throttle)(this._jump.bind(this), 1000 / 5, { leading: true });
-        _state__WEBPACK_IMPORTED_MODULE_0__.state.scene.add(this.getObject());
-    }
-    reset() {
-        this.camera.position.y = _state__WEBPACK_IMPORTED_MODULE_0__.state.worldHeight;
-    }
-    setAspectRatio(value) {
-        this.camera.aspect = value;
-        this.camera.updateProjectionMatrix();
-    }
-    getAnchorPosition() {
-        return this.camera.position;
-    }
-    setAnchorPosition(pos) {
-        this.camera.position.copy(pos);
-        this.camera.position.y = _state__WEBPACK_IMPORTED_MODULE_0__.state.worldHeight;
-    }
-    _onKeyDown(event) {
-        if (this.enabled) {
-            switch (event.code) {
-                case 'ArrowUp':
-                case 'KeyW':
-                    this._moveForward = true;
-                    break;
-                case 'ArrowLeft':
-                case 'KeyA':
-                    this._moveLeft = true;
-                    break;
-                case 'ArrowDown':
-                case 'KeyS':
-                    this._moveBackward = true;
-                    break;
-                case 'ArrowRight':
-                case 'KeyD':
-                    this._moveRight = true;
-                    break;
-                case 'Space':
-                    this._jump();
-                    break;
-                case 'ShiftLeft':
-                case 'AltLeft':
-                case 'ControlLeft':
-                case 'ShiftRight':
-                case 'AltRight':
-                case 'ControlRight':
-                    this._isRunning = true;
-                    break;
-            }
-        }
-    }
-    _jump() {
-        if (this._canJump === true) {
-            this._velocity.y += (0,_utils__WEBPACK_IMPORTED_MODULE_2__.lerp)(0, this._jumpImpulse, Math.pow(this._footBlocksTangibilityWeighted, 2));
-        }
-    }
-    _onKeyUp(event) {
-        if (this.enabled) {
-            switch (event.code) {
-                case 'ArrowUp':
-                case 'KeyW':
-                    this._moveForward = false;
-                    break;
-                case 'ArrowLeft':
-                case 'KeyA':
-                    this._moveLeft = false;
-                    break;
-                case 'ArrowDown':
-                case 'KeyS':
-                    this._moveBackward = false;
-                    break;
-                case 'ArrowRight':
-                case 'KeyD':
-                    this._moveRight = false;
-                    break;
-                case 'ShiftLeft':
-                case 'AltLeft':
-                case 'ControlLeft':
-                case 'ShiftRight':
-                case 'AltRight':
-                case 'ControlRight':
-                    this._isRunning = false;
-                    break;
-            }
-        }
-    }
-    _updateLocalBlocksData() {
-        let position = this.camera.position;
-        this._bodyBlocksTangibility = [
-            _blocks__WEBPACK_IMPORTED_MODULE_1__.blockManager.getTangibilityAtPosition(position.x + 0.5, position.y - 2, position.z + 0.5),
-            _blocks__WEBPACK_IMPORTED_MODULE_1__.blockManager.getTangibilityAtPosition(position.x + 0.5, position.y - 1, position.z + 0.5),
-            _blocks__WEBPACK_IMPORTED_MODULE_1__.blockManager.getTangibilityAtPosition(position.x + 0.5, position.y + 0, position.z + 0.5),
-            _blocks__WEBPACK_IMPORTED_MODULE_1__.blockManager.getTangibilityAtPosition(position.x + 0.5, position.y + 1, position.z + 0.5),
-        ];
-    }
-    get _footBlocksTangibility() {
-        return this._bodyBlocksTangibility[0];
-    }
-    get _footBlocksTangibilityWeighted() {
-        let w = this._bodyBlocksTangibility[0] * 1 -
-            this._bodyBlocksTangibility[1] * 0.5;
-        return (0,lodash__WEBPACK_IMPORTED_MODULE_3__.clamp)(w, 0, 1);
-    }
-    get _bubbleForce() {
-        return (0,lodash__WEBPACK_IMPORTED_MODULE_3__.clamp)(Math.pow((this._bodyBlocksTangibility[0] +
-            this._bodyBlocksTangibility[1] * 2) * 4, 4), 0, _state__WEBPACK_IMPORTED_MODULE_0__.state.worldHeight * 2);
-    }
-    get _aboveHeadBlockTangibility() {
-        return this._bodyBlocksTangibility[3];
-    }
-    update() {
-        if (this.enabled) {
-            this._updateLocalBlocksData();
-            let delta = _state__WEBPACK_IMPORTED_MODULE_0__.state.timeDelta;
-            let object = this.getObject();
-            let position = object.position;
-            let targetWalkVelocity = this._isRunning ? this._runVelocity : this._walkVelocity;
-            // console.log(currentTangibility)
-            let targetFallVelocity = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.lerp)(this._fallingVelocity, 0, Math.pow(this._footBlocksTangibilityWeighted, 0.1));
-            // let targetFallVelocity = lerp(this._fallingVelocity, 0, Math.pow(this._footBlocksTangibilityWeighted, 0.1))
-            // console.log(this._footBlocksTangibilityWeighted)
-            this._currentMovementVelocity = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.slide)(this._currentMovementVelocity, targetWalkVelocity, 100 * delta);
-            this._velocity.x -= this._velocity.x * 10.0 * delta;
-            this._velocity.z -= this._velocity.z * 10.0 * delta;
-            // console.log(this._bubbleForce, this._currentMovementVelocity, targetFallVelocity, targetWalkVelocity)
-            if (this._bubbleForce > 0) {
-                this._velocity.y += 9.8 * targetFallVelocity * delta * this._bubbleForce; // 100.0 = mass
-                this._velocity.y = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.clamp)(this._velocity.y, 0, this._velocity.y);
-            }
-            else {
-                this._velocity.y -= 9.8 * targetFallVelocity * delta * (1 - this._bubbleForce); // 100.0 = mass
-                this._velocity.y = (0,lodash__WEBPACK_IMPORTED_MODULE_3__.clamp)(this._velocity.y, this._velocity.y, 0);
-            }
-            if (isNaN(this._velocity.y)) {
-                debugger;
-            }
-            this._direction.z = Number(this._moveForward) - Number(this._moveBackward);
-            this._direction.x = Number(this._moveRight) - Number(this._moveLeft);
-            this._direction.normalize(); // this ensures consistent this._movements in all this._directions
-            this._velocity.z -= this._direction.z * this._currentMovementVelocity * delta;
-            this._velocity.x -= this._direction.x * this._currentMovementVelocity * delta;
-            this.moveRight(-this._velocity.x * delta);
-            this.moveForward(-this._velocity.z * delta);
-            object.position.y += (this._velocity.y * delta); // new behavior
-            this._canJump = this._footBlocksTangibilityWeighted > 0;
-            // z-reset
-            if (object.position.y < 0 + this._heroHeight) {
-                this._velocity.y = 0;
-                object.position.y = 0 + 2;
-                this._canJump = true;
-            }
-            /* fov */
-            let targetFov = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.lerp)(this._walkFov, this._runFov, (0,lodash__WEBPACK_IMPORTED_MODULE_3__.clamp)(this._currentMovementVelocity / this._runVelocity, 0, 1));
-            this._currentFov = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.slide)(this._currentFov, targetFov, 1);
-            this.camera.fov = this._currentFov;
-            this.camera.updateProjectionMatrix();
-        }
-        else {
-            this.unlock();
-        }
-    }
-}
 function getControlsOfType(type) {
-    switch (type) {
-        case EBrickscapeControlsType.Eagle: {
-            return BrickscapeEagleControls.getInstance();
-        }
-        case EBrickscapeControlsType.Hero: {
-            return BrickscapeHeroControls.getInstance();
-        }
-    }
+    return BrickscapeEagleControls.getInstance();
 }
 function setActiveControls(type) {
-    let prevAnchorPosition = new three__WEBPACK_IMPORTED_MODULE_5__.Vector3(0, 0, 0);
+    let prevAnchorPosition = new three__WEBPACK_IMPORTED_MODULE_3__.Vector3(0, 0, 0);
     if (_state__WEBPACK_IMPORTED_MODULE_0__.state.controls) {
         prevAnchorPosition = _state__WEBPACK_IMPORTED_MODULE_0__.state.controls.getAnchorPosition();
         _state__WEBPACK_IMPORTED_MODULE_0__.state.controls.enabled = false;
         _state__WEBPACK_IMPORTED_MODULE_0__.state.controls.update();
     }
-    (0,_utils__WEBPACK_IMPORTED_MODULE_2__.printd)(`setActiveControls: ${type}`);
+    (0,_utils__WEBPACK_IMPORTED_MODULE_1__.printd)(`setActiveControls: ${type}`);
     let controls = _state__WEBPACK_IMPORTED_MODULE_0__.state.controls = getControlsOfType(type);
     controls.setAnchorPosition(prevAnchorPosition);
     _state__WEBPACK_IMPORTED_MODULE_0__.state.renderer.reset();
@@ -18264,8 +18127,8 @@ class Environment extends three__WEBPACK_IMPORTED_MODULE_3__.Group {
         this.sun = null;
         this.ambient = null;
         this.fog = null;
-        this.daytime = 0.7;
-        this.dayspeed = 1 / 60;
+        this.daytime = 0.4;
+        this.dayspeed = 1 / 60 / 60 / 24 / 2;
         this.sunRotationRadius = (_state__WEBPACK_IMPORTED_MODULE_1__.state.drawChunks * _state__WEBPACK_IMPORTED_MODULE_1__.state.chunkSize) * 4;
         this.sunElevation = 2;
         this.minSunIntensity = -0.5;
@@ -18273,11 +18136,11 @@ class Environment extends three__WEBPACK_IMPORTED_MODULE_3__.Group {
         this.minAmbIntensity = 0.05;
         this.maxAmbIntensity = 0.6;
         let scene = _state__WEBPACK_IMPORTED_MODULE_1__.state.scene;
-        this.fog = new three__WEBPACK_IMPORTED_MODULE_3__.FogExp2(new three__WEBPACK_IMPORTED_MODULE_3__.Color(0x777777), 0.2);
+        this.fog = new three__WEBPACK_IMPORTED_MODULE_3__.FogExp2(new three__WEBPACK_IMPORTED_MODULE_3__.Color(0x777777), 0.015);
         if (_state__WEBPACK_IMPORTED_MODULE_1__.featureLevel > 0) {
             scene.fog = this.fog;
         }
-        let sun = this.sun = new three__WEBPACK_IMPORTED_MODULE_3__.DirectionalLight(0xfffeee, 1);
+        let sun = this.sun = new three__WEBPACK_IMPORTED_MODULE_3__.DirectionalLight(0xffffee, 1);
         sun.position.set(0.5, 1, -0.5);
         this.add(sun);
         if (_state__WEBPACK_IMPORTED_MODULE_1__.featureLevel > 0) {
@@ -18288,7 +18151,7 @@ class Environment extends three__WEBPACK_IMPORTED_MODULE_3__.Group {
             this.add(this.ambient);
         }
         // Create the lens flare object
-        let envMap = _loaders__WEBPACK_IMPORTED_MODULE_0__.rgbeLoader.load('assets/hdr/quarry.hdr', () => {
+        let envMap = _loaders__WEBPACK_IMPORTED_MODULE_0__.rgbeLoader.load('assets/hdr/panorama.hdr', () => {
             envMap.mapping = three__WEBPACK_IMPORTED_MODULE_3__.EquirectangularReflectionMapping;
             envMap.colorSpace = three__WEBPACK_IMPORTED_MODULE_3__.SRGBColorSpace;
             scene.background = envMap;
@@ -18441,8 +18304,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var tweakpane__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tweakpane */ "./node_modules/tweakpane/dist/tweakpane.js");
 /* harmony import */ var tweakpane__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tweakpane__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _controls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./controls */ "./src/controls.ts");
-
 
 const appInfo = `
 ## DESCRIPTION
@@ -18467,22 +18328,6 @@ const monitoringData = {
 };
 function createGui() {
     const controlPane = new tweakpane__WEBPACK_IMPORTED_MODULE_0__.Pane();
-    const controlsFolder = controlPane.addFolder({
-        title: 'Controls',
-        expanded: true
-    });
-    controlsFolder.addButton({
-        title: 'Eagle View',
-        label: ""
-    }).on('click', () => {
-        (0,_controls__WEBPACK_IMPORTED_MODULE_1__.setActiveControls)(_controls__WEBPACK_IMPORTED_MODULE_1__.EBrickscapeControlsType.Eagle);
-    });
-    controlsFolder.addButton({
-        title: 'Hero View',
-        label: "(Beta)"
-    }).on('click', () => {
-        (0,_controls__WEBPACK_IMPORTED_MODULE_1__.setActiveControls)(_controls__WEBPACK_IMPORTED_MODULE_1__.EBrickscapeControlsType.Hero);
-    });
     const monitorFolder = controlPane.addFolder({
         title: 'Monitoring',
         expanded: false
@@ -18773,8 +18618,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   rules: () => (/* binding */ rules)
 /* harmony export */ });
 /* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./blocks */ "./src/blocks.ts");
-/* harmony import */ var _structures__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./structures */ "./src/structures.ts");
-
 
 var EBlockReplacingStrategy;
 (function (EBlockReplacingStrategy) {
@@ -18788,16 +18631,17 @@ var EBlockCreationSource;
     EBlockCreationSource[EBlockCreationSource["Simplex"] = 1] = "Simplex";
     EBlockCreationSource[EBlockCreationSource["Perlin"] = 2] = "Perlin";
 })(EBlockCreationSource || (EBlockCreationSource = {}));
-function getSingleBlockStructure(blockType) {
+function getSingleBlockStructure(blockType, block_shape) {
     return [{
             blockType,
-            offset: [0, 0, 0]
+            offset: [0, 0, 0],
+            block_shape
         }];
 }
 const rules = [
     // Bedrock
     {
-        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Bedrock),
+        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockType.Bedrock, _blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockShape.Prism6),
         create: [
             {
                 source: EBlockCreationSource.Constant,
@@ -18811,231 +18655,124 @@ const rules = [
         ]
     },
     {
-        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Dirt),
+        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockType.Sand, _blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockShape.Prism6),
         create: [
             {
                 source: EBlockCreationSource.Perlin,
-                replace: EBlockReplacingStrategy.Replace,
+                replace: EBlockReplacingStrategy.DontReplace,
                 levels: [{
                         min: 1,
-                        max: 8
+                        max: 3
                     }],
                 stack: true,
-                params: { scale: 0.04, iterations: 2, scaleStep: 1.11, seed: 10, addent: -0.3 }
+                params: { scale: 0.05, iterations: 1, scaleStep: 0.5, seed: 10, addent: -0.5, multiplier: 2 }
             },
         ]
     },
     {
-        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Gravel),
+        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockType.Grass, _blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockShape.Prism6),
         create: [
             {
                 source: EBlockCreationSource.Perlin,
-                replace: EBlockReplacingStrategy.Replace,
+                replace: EBlockReplacingStrategy.DontReplace,
                 levels: [{
                         min: 1,
-                        max: 8
+                        max: 6
                     }],
                 stack: true,
-                params: { scale: 0.04, iterations: 0, scaleStep: 1.11, seed: 123, addent: -0.8 }
+                params: { scale: 0.1, iterations: 1, scaleStep: 0.5, seed: 10, addent: -0.4, multiplier: 2 }
             },
         ]
     },
     {
-        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Dirt),
-        create: [
-            {
-                source: EBlockCreationSource.Perlin,
-                replace: EBlockReplacingStrategy.Replace,
-                levels: [{
-                        min: 1,
-                        max: 8
-                    }],
-                stack: true,
-                params: { scale: 0.05, iterations: 0, scaleStep: 1.11, seed: 115, addent: -0.4, multiplier: 1.2 }
-            },
-        ]
-    },
-    {
-        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Sand),
-        create: [
-            {
-                source: EBlockCreationSource.Perlin,
-                replace: EBlockReplacingStrategy.OnlyReplace,
-                levels: [{
-                        min: 1,
-                        max: 4
-                    }],
-                params: { scale: 0.01, iterations: 0, scaleStep: 1.11, seed: 441, addent: 0.5, multiplier: 2 }
-            },
-        ]
-    },
-    {
-        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Dirt),
-        create: [
-            {
-                source: EBlockCreationSource.Perlin,
-                replace: EBlockReplacingStrategy.Replace,
-                replaceExclude: [_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Wood, _blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Leaves],
-                levels: [{
-                        min: 6,
-                        max: 24
-                    }],
-                stack: true,
-                params: { scale: 0.05, iterations: 0, scaleStep: 1.11, seed: 2234, addent: -0.6, multiplier: 1.2 }
-            },
-        ]
-    },
-    {
-        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Dirt),
-        create: [
-            {
-                source: EBlockCreationSource.Perlin,
-                replace: EBlockReplacingStrategy.Replace,
-                replaceExclude: [_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Wood, _blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Leaves],
-                levels: [{
-                        min: 6,
-                        max: 24
-                    }],
-                stack: true,
-                params: { scale: 0.005, iterations: 4, scaleStep: 1.11, seed: 132123, addent: -0.85, multiplier: 1.2 }
-            },
-        ]
-    },
-    {
-        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Gravel),
-        create: [
-            {
-                source: EBlockCreationSource.Perlin,
-                replace: EBlockReplacingStrategy.Replace,
-                levels: [{
-                        min: 4,
-                        max: 8
-                    }],
-                stack: true,
-                params: { scale: 0.07, iterations: 0, scaleStep: 1.11, seed: 455, addent: -0.9, multiplier: 2 }
-            },
-        ]
-    },
-    {
-        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Sand),
-        create: [
-            {
-                source: EBlockCreationSource.Perlin,
-                replace: EBlockReplacingStrategy.Replace,
-                levels: [{
-                        min: 4,
-                        max: 8
-                    }],
-                stack: true,
-                params: { scale: 0.01, iterations: 2, scaleStep: 1.11, seed: 545, addent: -0.95, multiplier: 1.5 }
-            },
-        ]
-    },
-    {
-        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Water),
+        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockType.Water, _blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockShape.Prism6),
         create: [
             {
                 source: EBlockCreationSource.Constant,
                 replace: EBlockReplacingStrategy.DontReplace,
                 levels: [{
                         min: 1,
-                        max: 4
+                        max: 2
                     }],
                 params: {}
             }
         ]
     },
     {
-        structure: _structures__WEBPACK_IMPORTED_MODULE_1__.structures['tree.01'],
+        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockType.Tree, _blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockShape.Tree01),
         create: [
             {
-                source: EBlockCreationSource.Simplex,
+                source: EBlockCreationSource.Perlin,
                 replace: EBlockReplacingStrategy.DontReplace,
-                replaceInclude: [_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Dirt],
-                levels: [{
-                        min: 16,
-                        max: 17
-                    }],
+                replaceInclude: [_blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockType.Grass],
                 stack: true,
-                params: { scale: 0.5, iterations: 0, scaleStep: 1.11, seed: 1233, addent: -0.88, multiplier: 0.5 }
+                levels: [
+                    {
+                        min: 5,
+                        max: 6
+                    },
+                    {
+                        min: 4,
+                        max: 5
+                    }
+                ],
+                params: { scale: 0.5, iterations: 1, scaleStep: 0.5, seed: 10, addent: -0.4, multiplier: 2 }
             },
         ]
     },
     {
-        structure: _structures__WEBPACK_IMPORTED_MODULE_1__.structures['tree.02'],
+        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockType.House, _blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockShape.House01),
         create: [
             {
-                source: EBlockCreationSource.Simplex,
-                replace: EBlockReplacingStrategy.Replace,
-                replaceInclude: [_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Dirt],
-                levels: [{
-                        min: 16,
-                        max: 24
-                    }],
+                source: EBlockCreationSource.Perlin,
+                replace: EBlockReplacingStrategy.DontReplace,
+                replaceInclude: [_blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockType.Grass],
+                replaceExclude: [_blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockType.Tree],
                 stack: true,
-                params: { scale: 0.3, iterations: 0, scaleStep: 1.11, seed: 11313, addent: -0.88, multiplier: 0.5 }
+                levels: [
+                    {
+                        min: 4,
+                        max: 5
+                    }
+                ],
+                params: { scale: 0.5, iterations: 1, scaleStep: 0.5, seed: 10, addent: -0.3, multiplier: 2 }
             },
         ]
     },
     {
-        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Grass),
+        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockType.House, _blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockShape.House01),
         create: [
             {
-                source: EBlockCreationSource.Simplex,
-                replace: EBlockReplacingStrategy.Replace,
-                replaceInclude: [_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Dirt],
-                levels: [{
-                        min: 23,
-                        max: 24
-                    }],
+                source: EBlockCreationSource.Perlin,
+                replace: EBlockReplacingStrategy.DontReplace,
+                replaceInclude: [_blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockType.Grass],
+                replaceExclude: [_blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockType.Tree],
                 stack: true,
-                params: { scale: 0.2, iterations: 2, scaleStep: 1.1, seed: 1244, addent: -0.2, multiplier: 3 }
+                levels: [
+                    {
+                        min: 3,
+                        max: 4
+                    }
+                ],
+                params: { scale: 0.5, iterations: 1, scaleStep: 0.5, seed: 10, addent: -0.6, multiplier: 2 }
             },
         ]
     },
     {
-        structure: [
-            {
-                blockType: _blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Bamboo,
-                offset: [0, -1, 0]
-            },
-            {
-                blockType: _blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Bamboo,
-                offset: [0, 0, 0]
-            },
-            {
-                blockType: _blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Bamboo,
-                offset: [0, 1, 0]
-            },
-        ],
+        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockType.Ship, _blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockShape.Ship01),
         create: [
             {
-                source: EBlockCreationSource.Simplex,
-                replace: EBlockReplacingStrategy.Replace,
-                replaceInclude: [_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Water],
-                replaceExclude: [_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Grass],
-                levels: [{
-                        min: 20,
-                        max: 24
-                    }],
+                source: EBlockCreationSource.Perlin,
+                replace: EBlockReplacingStrategy.DontReplace,
+                replaceInclude: [_blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockType.Water],
                 stack: true,
-                params: { scale: 0.2, iterations: 1, scaleStep: 1.2, seed: 412, addent: -0.6, multiplier: 1.6 }
-            },
-        ]
-    },
-    {
-        structure: getSingleBlockStructure(_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Pumpkin),
-        create: [
-            {
-                source: EBlockCreationSource.Simplex,
-                replace: EBlockReplacingStrategy.Replace,
-                replaceInclude: [_blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Dirt],
-                levels: [{
-                        min: 50,
-                        max: 51
-                    }],
-                stack: true,
-                params: { scale: 0.4, iterations: 0, scaleStep: 1.11, seed: 441, addent: -0.95, multiplier: 4 }
+                levels: [
+                    {
+                        min: 0,
+                        max: 3
+                    }
+                ],
+                params: { scale: 0.5, iterations: 1, scaleStep: 0.5, seed: 10, addent: -0.6, multiplier: 2 }
             },
         ]
     },
@@ -19072,19 +18809,9 @@ let _shaderTime = 0;
 // Texture loader for loading the tilemap texture
 let _textureLoader = new three__WEBPACK_IMPORTED_MODULE_2__.TextureLoader();
 let _tilesSF0 = _textureLoader.load('assets/tiles_sf0.png');
-let _tilesSF1 = _textureLoader.load('assets/tiles_sf1.png');
-let _tilesCF0 = _textureLoader.load('assets/tiles_cf0.png');
-let _tilesCF1 = _textureLoader.load('assets/tiles_cf1.png');
-_tilesSF0.flipY = _tilesSF1.flipY = false;
-_tilesCF0.flipY = _tilesCF1.flipY = false;
-_tilesSF1.minFilter = three__WEBPACK_IMPORTED_MODULE_2__.NearestFilter;
+_tilesSF0.flipY = false;
 _tilesSF0.minFilter = three__WEBPACK_IMPORTED_MODULE_2__.NearestFilter;
-_tilesSF1.magFilter = three__WEBPACK_IMPORTED_MODULE_2__.NearestFilter;
 _tilesSF0.magFilter = three__WEBPACK_IMPORTED_MODULE_2__.NearestFilter;
-_tilesCF1.minFilter = three__WEBPACK_IMPORTED_MODULE_2__.NearestFilter;
-_tilesCF0.minFilter = three__WEBPACK_IMPORTED_MODULE_2__.NearestFilter;
-_tilesCF1.magFilter = three__WEBPACK_IMPORTED_MODULE_2__.NearestFilter;
-_tilesCF0.magFilter = three__WEBPACK_IMPORTED_MODULE_2__.NearestFilter;
 const _perlinNoiseTexture = _textureLoader.load('assets/noise/perlin.32_1.png');
 _perlinNoiseTexture.wrapS = three__WEBPACK_IMPORTED_MODULE_2__.RepeatWrapping;
 _perlinNoiseTexture.wrapT = three__WEBPACK_IMPORTED_MODULE_2__.RepeatWrapping;
@@ -19099,9 +18826,6 @@ function _patchMaterial(mat, hooks) {
         uLightDirection: { value: new three__WEBPACK_IMPORTED_MODULE_2__.Vector3(0, 10, 2).normalize() },
         uMaxInstances: { value: _blocks__WEBPACK_IMPORTED_MODULE_1__.blockManager.maxBlocksPerChunk },
         uTilesSF0: { value: _tilesSF0 },
-        uTilesSF1: { value: _tilesSF1 },
-        uTilesCF0: { value: _tilesCF0 },
-        uTilesCF1: { value: _tilesCF1 },
         uTileSize: { value: 1 / 16 },
         uTime: { value: 0 },
         uResolution: { value: new three__WEBPACK_IMPORTED_MODULE_2__.Vector2() },
@@ -19115,9 +18839,6 @@ function _patchMaterial(mat, hooks) {
         shader.uniforms.uLightDirection = mat.uniforms.uLightDirection;
         shader.uniforms.uMaxInstances = mat.uniforms.uMaxInstances;
         shader.uniforms.uTilesSF0 = mat.uniforms.uTilesSF0;
-        shader.uniforms.uTilesSF1 = mat.uniforms.uTilesSF1;
-        shader.uniforms.uTilesCF0 = mat.uniforms.uTilesCF0;
-        shader.uniforms.uTilesCF1 = mat.uniforms.uTilesCF1;
         shader.uniforms.uTileSize = mat.uniforms.uTileSize;
         shader.uniforms.uFogHeight = mat.uniforms.uFogHeight;
         shader.uniforms.uWindSpeed = mat.uniforms.uWindSpeed;
@@ -19193,9 +18914,6 @@ function _patchMaterial(mat, hooks) {
         uniform float uMaxInstances;
 
         uniform sampler2D uTilesSF0;
-        uniform sampler2D uTilesSF1;
-        uniform sampler2D uTilesCF0;
-        uniform sampler2D uTilesCF1;
 
         uniform float uTileSize;
         uniform float uTime;
@@ -19225,14 +18943,7 @@ function _patchMaterial(mat, hooks) {
         vec2 tileUV = vec2((vInstanceData.x + 1.) * uTileSize - (vUv.x * uTileSize), (vInstanceData.y + 1.) * uTileSize - (vUv.y * uTileSize));
         
         vec4 tColorSF0 = texture2D(uTilesSF0, tileUV);
-        vec4 tColorSF1 = texture2D(uTilesSF1, tileUV);
-        vec4 tColorCF0 = texture2D(uTilesCF0, tileUV);
-        vec4 tColorCF1 = texture2D(uTilesCF1, tileUV);
-
-        vec4 tColorS = mix(tColorSF0, tColorSF1, animProgress);
-        vec4 tColorC = mix(tColorCF0, tColorCF1, animProgress);
-
-        vec4 tColor = mix(tColorS, tColorC, vFaceOrientation);
+        vec4 tColor = tColorSF0;
 
         diffuseColor.rgb *= tColor.rgb;
 
@@ -19242,8 +18953,8 @@ function _patchMaterial(mat, hooks) {
       `);
         shader.fragmentShader = shader.fragmentShader.replace(hooks[6], `
         #include <aomap_fragment>
-        reflectedLight.directDiffuse *= pow(vInstanceData.z, 2.);
-        reflectedLight.indirectDiffuse *= pow(vInstanceData.z, 2.);
+        reflectedLight.directDiffuse *= pow(vInstanceData.z, 2.) + 0.25;
+        reflectedLight.indirectDiffuse *= pow(vInstanceData.z, 2.) + 0.25;
       `);
         shader.fragmentShader = shader.fragmentShader.replace('#include <emissivemap_fragment>', `
       #include <emissivemap_fragment>
@@ -19420,9 +19131,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   featureLevel: () => (/* binding */ featureLevel),
 /* harmony export */   state: () => (/* binding */ state)
 /* harmony export */ });
-/* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./blocks */ "./src/blocks.ts");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ "./src/utils.ts");
-
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./src/utils.ts");
 
 var FeatureLevel;
 (function (FeatureLevel) {
@@ -19430,15 +19139,15 @@ var FeatureLevel;
     FeatureLevel[FeatureLevel["Mid"] = 1] = "Mid";
     FeatureLevel[FeatureLevel["High"] = 2] = "High";
 })(FeatureLevel || (FeatureLevel = {}));
-let featureLevel = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.isMobileDevice)() ? FeatureLevel.Low : FeatureLevel.Mid;
+let featureLevel = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.isMobileDevice)() ? FeatureLevel.Low : FeatureLevel.Mid;
 const state = {
     frameDelta: 1,
     timeDelta: 0,
     seed: 454,
-    chunkSize: featureLevel == FeatureLevel.Low ? 8 : 12,
-    drawChunks: featureLevel == FeatureLevel.Low ? 2 : 3,
-    blockShape: _blocks__WEBPACK_IMPORTED_MODULE_0__.BlockShape.Cube,
-    worldHeight: 24,
+    chunkSize: 12,
+    drawChunks: 3,
+    // blockShape: EBlockShape.Prism6,
+    worldHeight: 8,
     scene: null,
     renderer: null,
     controls: null,
@@ -19448,50 +19157,6 @@ const state = {
     world: null,
     blockManager: null
 };
-
-
-/***/ }),
-
-/***/ "./src/structures.ts":
-/*!***************************!*\
-  !*** ./src/structures.ts ***!
-  \***************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   structures: () => (/* binding */ structures)
-/* harmony export */ });
-/* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./blocks */ "./src/blocks.ts");
-
-const structures = {
-    "tree.01": createTreeStructure(4, 2, 3),
-    "tree.02": createTreeStructure(2, 1, 2),
-    "tree.03": createTreeStructure(3, 3, 2)
-};
-function createTreeStructure(height, crownWidth, crownHeight) {
-    let r = [];
-    for (let i = 0; i < height; i++) {
-        r.push({
-            offset: [0, i, 0],
-            blockType: _blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Wood
-        });
-    }
-    for (let cx = -crownWidth; cx <= crownWidth; cx++) {
-        for (let cy = 0; cy <= crownHeight; cy++) {
-            for (let cz = -crownWidth; cz <= crownWidth; cz++) {
-                if ((cx + cy + cz) % 2 === 0) {
-                    r.push({
-                        offset: [cx, cy + height - 1, cz],
-                        blockType: _blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.Leaves
-                    });
-                }
-            }
-        }
-    }
-    return r;
-}
 
 
 /***/ }),
@@ -19932,6 +19597,9 @@ class WorldManager {
                         blocksCount = (0,_utils__WEBPACK_IMPORTED_MODULE_5__.clamp)(blocksCount, 0, _state__WEBPACK_IMPORTED_MODULE_3__.state.worldHeight);
                         blocksCount = (0,_utils__WEBPACK_IMPORTED_MODULE_5__.clamp)(blocksCount, 0, levelHeight);
                         let stackOffset = creationRule.stack ? -(0,_utils__WEBPACK_IMPORTED_MODULE_5__.clamp)(level.min - _blocks__WEBPACK_IMPORTED_MODULE_0__.blockManager.getElevationAt(x, z) - 1, 0, level.min) : 0;
+                        if (stackOffset < 0) {
+                            return;
+                        }
                         for (let y = level.min + stackOffset; y < level.min + blocksCount + stackOffset; y++) {
                             let replaceAllowed = this._testReplaceRestrictions(x, y, z, creationRule);
                             if (rule.name === 'clear') {
@@ -19948,8 +19616,8 @@ class WorldManager {
         this._cleanChunk(cx, cz);
     }
     _cleanChunk(cx, cz) {
-        _blocks__WEBPACK_IMPORTED_MODULE_0__.blockManager.traverseChunk(cx, cz, (x, y, z, block) => {
-            if (block && block.btype === _blocks__WEBPACK_IMPORTED_MODULE_0__.BlockType.None) {
+        _blocks__WEBPACK_IMPORTED_MODULE_0__.blockManager.traverse_chunk(cx, cz, (x, y, z, block) => {
+            if (block && block.btype === _blocks__WEBPACK_IMPORTED_MODULE_0__.EBlockType.None) {
                 _blocks__WEBPACK_IMPORTED_MODULE_0__.blockManager.removeBlock(block);
             }
         });
@@ -19994,10 +19662,10 @@ class WorldManager {
     }
     _placeStructure(x, y, z, structure, replaceStrategy) {
         structure.forEach((placement, index) => {
-            this._placeBlock(x + placement.offset[0], y + placement.offset[1], z + placement.offset[2], placement.blockType, replaceStrategy);
+            this._placeBlock(x + placement.offset[0], y + placement.offset[1], z + placement.offset[2], placement.blockType, replaceStrategy, placement.block_shape);
         });
     }
-    _placeBlock(x, y, z, blockType, replaceStrategy) {
+    _placeBlock(x, y, z, blockType, replaceStrategy, shape) {
         // console.log(x, y, z)
         switch (replaceStrategy) {
             case _rules__WEBPACK_IMPORTED_MODULE_2__.EBlockReplacingStrategy.Replace: {
@@ -20007,7 +19675,8 @@ class WorldManager {
                     y: y,
                     z: z,
                     lightness: 1,
-                    blockType: blockType
+                    blockType: blockType,
+                    shape
                 });
             }
             case _rules__WEBPACK_IMPORTED_MODULE_2__.EBlockReplacingStrategy.DontReplace: {
@@ -20018,7 +19687,8 @@ class WorldManager {
                         y: y,
                         z: z,
                         lightness: 1,
-                        blockType: blockType
+                        blockType: blockType,
+                        shape
                     });
                 }
                 break;
@@ -20031,7 +19701,8 @@ class WorldManager {
                         y: y,
                         z: z,
                         lightness: 1,
-                        blockType: blockType
+                        blockType: blockType,
+                        shape
                     });
                 }
                 break;
@@ -20070,7 +19741,7 @@ class WorldManager {
     }
     _updateChunkLighting(cx, cz) {
         // shading 
-        _blocks__WEBPACK_IMPORTED_MODULE_0__.blockManager.traverseChunk(cx, cz, (x, y, z, block) => {
+        _blocks__WEBPACK_IMPORTED_MODULE_0__.blockManager.traverse_chunk(cx, cz, (x, y, z, block) => {
             if (block) {
                 let lightness = 1;
                 if (block.isLightSource) {
@@ -81536,172 +81207,904 @@ class OrbitControls extends three__WEBPACK_IMPORTED_MODULE_0__.EventDispatcher {
 
 /***/ }),
 
-/***/ "./node_modules/three/examples/jsm/controls/PointerLockControls.js":
-/*!*************************************************************************!*\
-  !*** ./node_modules/three/examples/jsm/controls/PointerLockControls.js ***!
-  \*************************************************************************/
+/***/ "./node_modules/three/examples/jsm/loaders/OBJLoader.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/three/examples/jsm/loaders/OBJLoader.js ***!
+  \**************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   PointerLockControls: () => (/* binding */ PointerLockControls)
+/* harmony export */   OBJLoader: () => (/* binding */ OBJLoader)
 /* harmony export */ });
 /* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
 
 
-const _euler = new three__WEBPACK_IMPORTED_MODULE_0__.Euler( 0, 0, 0, 'YXZ' );
-const _vector = new three__WEBPACK_IMPORTED_MODULE_0__.Vector3();
+// o object_name | g group_name
+const _object_pattern = /^[og]\s*(.+)?/;
+// mtllib file_reference
+const _material_library_pattern = /^mtllib /;
+// usemtl material_name
+const _material_use_pattern = /^usemtl /;
+// usemap map_name
+const _map_use_pattern = /^usemap /;
+const _face_vertex_data_separator_pattern = /\s+/;
 
-const _changeEvent = { type: 'change' };
-const _lockEvent = { type: 'lock' };
-const _unlockEvent = { type: 'unlock' };
+const _vA = new three__WEBPACK_IMPORTED_MODULE_0__.Vector3();
+const _vB = new three__WEBPACK_IMPORTED_MODULE_0__.Vector3();
+const _vC = new three__WEBPACK_IMPORTED_MODULE_0__.Vector3();
 
-const _PI_2 = Math.PI / 2;
+const _ab = new three__WEBPACK_IMPORTED_MODULE_0__.Vector3();
+const _cb = new three__WEBPACK_IMPORTED_MODULE_0__.Vector3();
 
-class PointerLockControls extends three__WEBPACK_IMPORTED_MODULE_0__.EventDispatcher {
+const _color = new three__WEBPACK_IMPORTED_MODULE_0__.Color();
 
-	constructor( camera, domElement ) {
+function ParserState() {
 
-		super();
+	const state = {
+		objects: [],
+		object: {},
 
-		this.camera = camera;
-		this.domElement = domElement;
+		vertices: [],
+		normals: [],
+		colors: [],
+		uvs: [],
 
-		this.isLocked = false;
+		materials: {},
+		materialLibraries: [],
 
-		// Set to constrain the pitch of the camera
-		// Range is 0 to Math.PI radians
-		this.minPolarAngle = 0; // radians
-		this.maxPolarAngle = Math.PI; // radians
+		startObject: function ( name, fromDeclaration ) {
 
-		this.pointerSpeed = 1.0;
+			// If the current object (initial from reset) is not from a g/o declaration in the parsed
+			// file. We need to use it for the first parsed g/o to keep things in sync.
+			if ( this.object && this.object.fromDeclaration === false ) {
 
-		this._onMouseMove = onMouseMove.bind( this );
-		this._onPointerlockChange = onPointerlockChange.bind( this );
-		this._onPointerlockError = onPointerlockError.bind( this );
+				this.object.name = name;
+				this.object.fromDeclaration = ( fromDeclaration !== false );
+				return;
 
-		this.connect();
+			}
 
-	}
+			const previousMaterial = ( this.object && typeof this.object.currentMaterial === 'function' ? this.object.currentMaterial() : undefined );
 
-	connect() {
+			if ( this.object && typeof this.object._finalize === 'function' ) {
 
-		this.domElement.ownerDocument.addEventListener( 'mousemove', this._onMouseMove );
-		this.domElement.ownerDocument.addEventListener( 'pointerlockchange', this._onPointerlockChange );
-		this.domElement.ownerDocument.addEventListener( 'pointerlockerror', this._onPointerlockError );
+				this.object._finalize( true );
 
-	}
+			}
 
-	disconnect() {
+			this.object = {
+				name: name || '',
+				fromDeclaration: ( fromDeclaration !== false ),
 
-		this.domElement.ownerDocument.removeEventListener( 'mousemove', this._onMouseMove );
-		this.domElement.ownerDocument.removeEventListener( 'pointerlockchange', this._onPointerlockChange );
-		this.domElement.ownerDocument.removeEventListener( 'pointerlockerror', this._onPointerlockError );
+				geometry: {
+					vertices: [],
+					normals: [],
+					colors: [],
+					uvs: [],
+					hasUVIndices: false
+				},
+				materials: [],
+				smooth: true,
 
-	}
+				startMaterial: function ( name, libraries ) {
 
-	dispose() {
+					const previous = this._finalize( false );
 
-		this.disconnect();
+					// New usemtl declaration overwrites an inherited material, except if faces were declared
+					// after the material, then it must be preserved for proper MultiMaterial continuation.
+					if ( previous && ( previous.inherited || previous.groupCount <= 0 ) ) {
 
-	}
+						this.materials.splice( previous.index, 1 );
 
-	getObject() { // retaining this method for backward compatibility
+					}
 
-		return this.camera;
+					const material = {
+						index: this.materials.length,
+						name: name || '',
+						mtllib: ( Array.isArray( libraries ) && libraries.length > 0 ? libraries[ libraries.length - 1 ] : '' ),
+						smooth: ( previous !== undefined ? previous.smooth : this.smooth ),
+						groupStart: ( previous !== undefined ? previous.groupEnd : 0 ),
+						groupEnd: - 1,
+						groupCount: - 1,
+						inherited: false,
 
-	}
+						clone: function ( index ) {
 
-	getDirection( v ) {
+							const cloned = {
+								index: ( typeof index === 'number' ? index : this.index ),
+								name: this.name,
+								mtllib: this.mtllib,
+								smooth: this.smooth,
+								groupStart: 0,
+								groupEnd: - 1,
+								groupCount: - 1,
+								inherited: false
+							};
+							cloned.clone = this.clone.bind( cloned );
+							return cloned;
 
-		return v.set( 0, 0, - 1 ).applyQuaternion( this.camera.quaternion );
+						}
+					};
 
-	}
+					this.materials.push( material );
 
-	moveForward( distance ) {
+					return material;
 
-		// move forward parallel to the xz-plane
-		// assumes camera.up is y-up
+				},
 
-		const camera = this.camera;
+				currentMaterial: function () {
 
-		_vector.setFromMatrixColumn( camera.matrix, 0 );
+					if ( this.materials.length > 0 ) {
 
-		_vector.crossVectors( camera.up, _vector );
+						return this.materials[ this.materials.length - 1 ];
 
-		camera.position.addScaledVector( _vector, distance );
+					}
 
-	}
+					return undefined;
 
-	moveRight( distance ) {
+				},
 
-		const camera = this.camera;
+				_finalize: function ( end ) {
 
-		_vector.setFromMatrixColumn( camera.matrix, 0 );
+					const lastMultiMaterial = this.currentMaterial();
+					if ( lastMultiMaterial && lastMultiMaterial.groupEnd === - 1 ) {
 
-		camera.position.addScaledVector( _vector, distance );
+						lastMultiMaterial.groupEnd = this.geometry.vertices.length / 3;
+						lastMultiMaterial.groupCount = lastMultiMaterial.groupEnd - lastMultiMaterial.groupStart;
+						lastMultiMaterial.inherited = false;
 
-	}
+					}
 
-	lock() {
+					// Ignore objects tail materials if no face declarations followed them before a new o/g started.
+					if ( end && this.materials.length > 1 ) {
 
-		this.domElement.requestPointerLock();
+						for ( let mi = this.materials.length - 1; mi >= 0; mi -- ) {
 
-	}
+							if ( this.materials[ mi ].groupCount <= 0 ) {
 
-	unlock() {
+								this.materials.splice( mi, 1 );
 
-		this.domElement.ownerDocument.exitPointerLock();
+							}
 
-	}
+						}
+
+					}
+
+					// Guarantee at least one empty material, this makes the creation later more straight forward.
+					if ( end && this.materials.length === 0 ) {
+
+						this.materials.push( {
+							name: '',
+							smooth: this.smooth
+						} );
+
+					}
+
+					return lastMultiMaterial;
+
+				}
+			};
+
+			// Inherit previous objects material.
+			// Spec tells us that a declared material must be set to all objects until a new material is declared.
+			// If a usemtl declaration is encountered while this new object is being parsed, it will
+			// overwrite the inherited material. Exception being that there was already face declarations
+			// to the inherited material, then it will be preserved for proper MultiMaterial continuation.
+
+			if ( previousMaterial && previousMaterial.name && typeof previousMaterial.clone === 'function' ) {
+
+				const declared = previousMaterial.clone( 0 );
+				declared.inherited = true;
+				this.object.materials.push( declared );
+
+			}
+
+			this.objects.push( this.object );
+
+		},
+
+		finalize: function () {
+
+			if ( this.object && typeof this.object._finalize === 'function' ) {
+
+				this.object._finalize( true );
+
+			}
+
+		},
+
+		parseVertexIndex: function ( value, len ) {
+
+			const index = parseInt( value, 10 );
+			return ( index >= 0 ? index - 1 : index + len / 3 ) * 3;
+
+		},
+
+		parseNormalIndex: function ( value, len ) {
+
+			const index = parseInt( value, 10 );
+			return ( index >= 0 ? index - 1 : index + len / 3 ) * 3;
+
+		},
+
+		parseUVIndex: function ( value, len ) {
+
+			const index = parseInt( value, 10 );
+			return ( index >= 0 ? index - 1 : index + len / 2 ) * 2;
+
+		},
+
+		addVertex: function ( a, b, c ) {
+
+			const src = this.vertices;
+			const dst = this.object.geometry.vertices;
+
+			dst.push( src[ a + 0 ], src[ a + 1 ], src[ a + 2 ] );
+			dst.push( src[ b + 0 ], src[ b + 1 ], src[ b + 2 ] );
+			dst.push( src[ c + 0 ], src[ c + 1 ], src[ c + 2 ] );
+
+		},
+
+		addVertexPoint: function ( a ) {
+
+			const src = this.vertices;
+			const dst = this.object.geometry.vertices;
+
+			dst.push( src[ a + 0 ], src[ a + 1 ], src[ a + 2 ] );
+
+		},
+
+		addVertexLine: function ( a ) {
+
+			const src = this.vertices;
+			const dst = this.object.geometry.vertices;
+
+			dst.push( src[ a + 0 ], src[ a + 1 ], src[ a + 2 ] );
+
+		},
+
+		addNormal: function ( a, b, c ) {
+
+			const src = this.normals;
+			const dst = this.object.geometry.normals;
+
+			dst.push( src[ a + 0 ], src[ a + 1 ], src[ a + 2 ] );
+			dst.push( src[ b + 0 ], src[ b + 1 ], src[ b + 2 ] );
+			dst.push( src[ c + 0 ], src[ c + 1 ], src[ c + 2 ] );
+
+		},
+
+		addFaceNormal: function ( a, b, c ) {
+
+			const src = this.vertices;
+			const dst = this.object.geometry.normals;
+
+			_vA.fromArray( src, a );
+			_vB.fromArray( src, b );
+			_vC.fromArray( src, c );
+
+			_cb.subVectors( _vC, _vB );
+			_ab.subVectors( _vA, _vB );
+			_cb.cross( _ab );
+
+			_cb.normalize();
+
+			dst.push( _cb.x, _cb.y, _cb.z );
+			dst.push( _cb.x, _cb.y, _cb.z );
+			dst.push( _cb.x, _cb.y, _cb.z );
+
+		},
+
+		addColor: function ( a, b, c ) {
+
+			const src = this.colors;
+			const dst = this.object.geometry.colors;
+
+			if ( src[ a ] !== undefined ) dst.push( src[ a + 0 ], src[ a + 1 ], src[ a + 2 ] );
+			if ( src[ b ] !== undefined ) dst.push( src[ b + 0 ], src[ b + 1 ], src[ b + 2 ] );
+			if ( src[ c ] !== undefined ) dst.push( src[ c + 0 ], src[ c + 1 ], src[ c + 2 ] );
+
+		},
+
+		addUV: function ( a, b, c ) {
+
+			const src = this.uvs;
+			const dst = this.object.geometry.uvs;
+
+			dst.push( src[ a + 0 ], src[ a + 1 ] );
+			dst.push( src[ b + 0 ], src[ b + 1 ] );
+			dst.push( src[ c + 0 ], src[ c + 1 ] );
+
+		},
+
+		addDefaultUV: function () {
+
+			const dst = this.object.geometry.uvs;
+
+			dst.push( 0, 0 );
+			dst.push( 0, 0 );
+			dst.push( 0, 0 );
+
+		},
+
+		addUVLine: function ( a ) {
+
+			const src = this.uvs;
+			const dst = this.object.geometry.uvs;
+
+			dst.push( src[ a + 0 ], src[ a + 1 ] );
+
+		},
+
+		addFace: function ( a, b, c, ua, ub, uc, na, nb, nc ) {
+
+			const vLen = this.vertices.length;
+
+			let ia = this.parseVertexIndex( a, vLen );
+			let ib = this.parseVertexIndex( b, vLen );
+			let ic = this.parseVertexIndex( c, vLen );
+
+			this.addVertex( ia, ib, ic );
+			this.addColor( ia, ib, ic );
+
+			// normals
+
+			if ( na !== undefined && na !== '' ) {
+
+				const nLen = this.normals.length;
+
+				ia = this.parseNormalIndex( na, nLen );
+				ib = this.parseNormalIndex( nb, nLen );
+				ic = this.parseNormalIndex( nc, nLen );
+
+				this.addNormal( ia, ib, ic );
+
+			} else {
+
+				this.addFaceNormal( ia, ib, ic );
+
+			}
+
+			// uvs
+
+			if ( ua !== undefined && ua !== '' ) {
+
+				const uvLen = this.uvs.length;
+
+				ia = this.parseUVIndex( ua, uvLen );
+				ib = this.parseUVIndex( ub, uvLen );
+				ic = this.parseUVIndex( uc, uvLen );
+
+				this.addUV( ia, ib, ic );
+
+				this.object.geometry.hasUVIndices = true;
+
+			} else {
+
+				// add placeholder values (for inconsistent face definitions)
+
+				this.addDefaultUV();
+
+			}
+
+		},
+
+		addPointGeometry: function ( vertices ) {
+
+			this.object.geometry.type = 'Points';
+
+			const vLen = this.vertices.length;
+
+			for ( let vi = 0, l = vertices.length; vi < l; vi ++ ) {
+
+				const index = this.parseVertexIndex( vertices[ vi ], vLen );
+
+				this.addVertexPoint( index );
+				this.addColor( index );
+
+			}
+
+		},
+
+		addLineGeometry: function ( vertices, uvs ) {
+
+			this.object.geometry.type = 'Line';
+
+			const vLen = this.vertices.length;
+			const uvLen = this.uvs.length;
+
+			for ( let vi = 0, l = vertices.length; vi < l; vi ++ ) {
+
+				this.addVertexLine( this.parseVertexIndex( vertices[ vi ], vLen ) );
+
+			}
+
+			for ( let uvi = 0, l = uvs.length; uvi < l; uvi ++ ) {
+
+				this.addUVLine( this.parseUVIndex( uvs[ uvi ], uvLen ) );
+
+			}
+
+		}
+
+	};
+
+	state.startObject( '', false );
+
+	return state;
 
 }
 
-// event listeners
+//
 
-function onMouseMove( event ) {
+class OBJLoader extends three__WEBPACK_IMPORTED_MODULE_0__.Loader {
 
-	if ( this.isLocked === false ) return;
+	constructor( manager ) {
 
-	const movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
-	const movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+		super( manager );
 
-	const camera = this.camera;
-	_euler.setFromQuaternion( camera.quaternion );
-
-	_euler.y -= movementX * 0.002 * this.pointerSpeed;
-	_euler.x -= movementY * 0.002 * this.pointerSpeed;
-
-	_euler.x = Math.max( _PI_2 - this.maxPolarAngle, Math.min( _PI_2 - this.minPolarAngle, _euler.x ) );
-
-	camera.quaternion.setFromEuler( _euler );
-
-	this.dispatchEvent( _changeEvent );
-
-}
-
-function onPointerlockChange() {
-
-	if ( this.domElement.ownerDocument.pointerLockElement === this.domElement ) {
-
-		this.dispatchEvent( _lockEvent );
-
-		this.isLocked = true;
-
-	} else {
-
-		this.dispatchEvent( _unlockEvent );
-
-		this.isLocked = false;
+		this.materials = null;
 
 	}
 
-}
+	load( url, onLoad, onProgress, onError ) {
 
-function onPointerlockError() {
+		const scope = this;
 
-	console.error( 'THREE.PointerLockControls: Unable to use Pointer Lock API' );
+		const loader = new three__WEBPACK_IMPORTED_MODULE_0__.FileLoader( this.manager );
+		loader.setPath( this.path );
+		loader.setRequestHeader( this.requestHeader );
+		loader.setWithCredentials( this.withCredentials );
+		loader.load( url, function ( text ) {
+
+			try {
+
+				onLoad( scope.parse( text ) );
+
+			} catch ( e ) {
+
+				if ( onError ) {
+
+					onError( e );
+
+				} else {
+
+					console.error( e );
+
+				}
+
+				scope.manager.itemError( url );
+
+			}
+
+		}, onProgress, onError );
+
+	}
+
+	setMaterials( materials ) {
+
+		this.materials = materials;
+
+		return this;
+
+	}
+
+	parse( text ) {
+
+		const state = new ParserState();
+
+		if ( text.indexOf( '\r\n' ) !== - 1 ) {
+
+			// This is faster than String.split with regex that splits on both
+			text = text.replace( /\r\n/g, '\n' );
+
+		}
+
+		if ( text.indexOf( '\\\n' ) !== - 1 ) {
+
+			// join lines separated by a line continuation character (\)
+			text = text.replace( /\\\n/g, '' );
+
+		}
+
+		const lines = text.split( '\n' );
+		let result = [];
+
+		for ( let i = 0, l = lines.length; i < l; i ++ ) {
+
+			const line = lines[ i ].trimStart();
+
+			if ( line.length === 0 ) continue;
+
+			const lineFirstChar = line.charAt( 0 );
+
+			// @todo invoke passed in handler if any
+			if ( lineFirstChar === '#' ) continue; // skip comments
+
+			if ( lineFirstChar === 'v' ) {
+
+				const data = line.split( _face_vertex_data_separator_pattern );
+
+				switch ( data[ 0 ] ) {
+
+					case 'v':
+						state.vertices.push(
+							parseFloat( data[ 1 ] ),
+							parseFloat( data[ 2 ] ),
+							parseFloat( data[ 3 ] )
+						);
+						if ( data.length >= 7 ) {
+
+							_color.setRGB(
+								parseFloat( data[ 4 ] ),
+								parseFloat( data[ 5 ] ),
+								parseFloat( data[ 6 ] )
+							).convertSRGBToLinear();
+
+							state.colors.push( _color.r, _color.g, _color.b );
+
+						} else {
+
+							// if no colors are defined, add placeholders so color and vertex indices match
+
+							state.colors.push( undefined, undefined, undefined );
+
+						}
+
+						break;
+					case 'vn':
+						state.normals.push(
+							parseFloat( data[ 1 ] ),
+							parseFloat( data[ 2 ] ),
+							parseFloat( data[ 3 ] )
+						);
+						break;
+					case 'vt':
+						state.uvs.push(
+							parseFloat( data[ 1 ] ),
+							parseFloat( data[ 2 ] )
+						);
+						break;
+
+				}
+
+			} else if ( lineFirstChar === 'f' ) {
+
+				const lineData = line.slice( 1 ).trim();
+				const vertexData = lineData.split( _face_vertex_data_separator_pattern );
+				const faceVertices = [];
+
+				// Parse the face vertex data into an easy to work with format
+
+				for ( let j = 0, jl = vertexData.length; j < jl; j ++ ) {
+
+					const vertex = vertexData[ j ];
+
+					if ( vertex.length > 0 ) {
+
+						const vertexParts = vertex.split( '/' );
+						faceVertices.push( vertexParts );
+
+					}
+
+				}
+
+				// Draw an edge between the first vertex and all subsequent vertices to form an n-gon
+
+				const v1 = faceVertices[ 0 ];
+
+				for ( let j = 1, jl = faceVertices.length - 1; j < jl; j ++ ) {
+
+					const v2 = faceVertices[ j ];
+					const v3 = faceVertices[ j + 1 ];
+
+					state.addFace(
+						v1[ 0 ], v2[ 0 ], v3[ 0 ],
+						v1[ 1 ], v2[ 1 ], v3[ 1 ],
+						v1[ 2 ], v2[ 2 ], v3[ 2 ]
+					);
+
+				}
+
+			} else if ( lineFirstChar === 'l' ) {
+
+				const lineParts = line.substring( 1 ).trim().split( ' ' );
+				let lineVertices = [];
+				const lineUVs = [];
+
+				if ( line.indexOf( '/' ) === - 1 ) {
+
+					lineVertices = lineParts;
+
+				} else {
+
+					for ( let li = 0, llen = lineParts.length; li < llen; li ++ ) {
+
+						const parts = lineParts[ li ].split( '/' );
+
+						if ( parts[ 0 ] !== '' ) lineVertices.push( parts[ 0 ] );
+						if ( parts[ 1 ] !== '' ) lineUVs.push( parts[ 1 ] );
+
+					}
+
+				}
+
+				state.addLineGeometry( lineVertices, lineUVs );
+
+			} else if ( lineFirstChar === 'p' ) {
+
+				const lineData = line.slice( 1 ).trim();
+				const pointData = lineData.split( ' ' );
+
+				state.addPointGeometry( pointData );
+
+			} else if ( ( result = _object_pattern.exec( line ) ) !== null ) {
+
+				// o object_name
+				// or
+				// g group_name
+
+				// WORKAROUND: https://bugs.chromium.org/p/v8/issues/detail?id=2869
+				// let name = result[ 0 ].slice( 1 ).trim();
+				const name = ( ' ' + result[ 0 ].slice( 1 ).trim() ).slice( 1 );
+
+				state.startObject( name );
+
+			} else if ( _material_use_pattern.test( line ) ) {
+
+				// material
+
+				state.object.startMaterial( line.substring( 7 ).trim(), state.materialLibraries );
+
+			} else if ( _material_library_pattern.test( line ) ) {
+
+				// mtl file
+
+				state.materialLibraries.push( line.substring( 7 ).trim() );
+
+			} else if ( _map_use_pattern.test( line ) ) {
+
+				// the line is parsed but ignored since the loader assumes textures are defined MTL files
+				// (according to https://www.okino.com/conv/imp_wave.htm, 'usemap' is the old-style Wavefront texture reference method)
+
+				console.warn( 'THREE.OBJLoader: Rendering identifier "usemap" not supported. Textures must be defined in MTL files.' );
+
+			} else if ( lineFirstChar === 's' ) {
+
+				result = line.split( ' ' );
+
+				// smooth shading
+
+				// @todo Handle files that have varying smooth values for a set of faces inside one geometry,
+				// but does not define a usemtl for each face set.
+				// This should be detected and a dummy material created (later MultiMaterial and geometry groups).
+				// This requires some care to not create extra material on each smooth value for "normal" obj files.
+				// where explicit usemtl defines geometry groups.
+				// Example asset: examples/models/obj/cerberus/Cerberus.obj
+
+				/*
+					 * http://paulbourke.net/dataformats/obj/
+					 *
+					 * From chapter "Grouping" Syntax explanation "s group_number":
+					 * "group_number is the smoothing group number. To turn off smoothing groups, use a value of 0 or off.
+					 * Polygonal elements use group numbers to put elements in different smoothing groups. For free-form
+					 * surfaces, smoothing groups are either turned on or off; there is no difference between values greater
+					 * than 0."
+					 */
+				if ( result.length > 1 ) {
+
+					const value = result[ 1 ].trim().toLowerCase();
+					state.object.smooth = ( value !== '0' && value !== 'off' );
+
+				} else {
+
+					// ZBrush can produce "s" lines #11707
+					state.object.smooth = true;
+
+				}
+
+				const material = state.object.currentMaterial();
+				if ( material ) material.smooth = state.object.smooth;
+
+			} else {
+
+				// Handle null terminated files without exception
+				if ( line === '\0' ) continue;
+
+				console.warn( 'THREE.OBJLoader: Unexpected line: "' + line + '"' );
+
+			}
+
+		}
+
+		state.finalize();
+
+		const container = new three__WEBPACK_IMPORTED_MODULE_0__.Group();
+		container.materialLibraries = [].concat( state.materialLibraries );
+
+		const hasPrimitives = ! ( state.objects.length === 1 && state.objects[ 0 ].geometry.vertices.length === 0 );
+
+		if ( hasPrimitives === true ) {
+
+			for ( let i = 0, l = state.objects.length; i < l; i ++ ) {
+
+				const object = state.objects[ i ];
+				const geometry = object.geometry;
+				const materials = object.materials;
+				const isLine = ( geometry.type === 'Line' );
+				const isPoints = ( geometry.type === 'Points' );
+				let hasVertexColors = false;
+
+				// Skip o/g line declarations that did not follow with any faces
+				if ( geometry.vertices.length === 0 ) continue;
+
+				const buffergeometry = new three__WEBPACK_IMPORTED_MODULE_0__.BufferGeometry();
+
+				buffergeometry.setAttribute( 'position', new three__WEBPACK_IMPORTED_MODULE_0__.Float32BufferAttribute( geometry.vertices, 3 ) );
+
+				if ( geometry.normals.length > 0 ) {
+
+					buffergeometry.setAttribute( 'normal', new three__WEBPACK_IMPORTED_MODULE_0__.Float32BufferAttribute( geometry.normals, 3 ) );
+
+				}
+
+				if ( geometry.colors.length > 0 ) {
+
+					hasVertexColors = true;
+					buffergeometry.setAttribute( 'color', new three__WEBPACK_IMPORTED_MODULE_0__.Float32BufferAttribute( geometry.colors, 3 ) );
+
+				}
+
+				if ( geometry.hasUVIndices === true ) {
+
+					buffergeometry.setAttribute( 'uv', new three__WEBPACK_IMPORTED_MODULE_0__.Float32BufferAttribute( geometry.uvs, 2 ) );
+
+				}
+
+				// Create materials
+
+				const createdMaterials = [];
+
+				for ( let mi = 0, miLen = materials.length; mi < miLen; mi ++ ) {
+
+					const sourceMaterial = materials[ mi ];
+					const materialHash = sourceMaterial.name + '_' + sourceMaterial.smooth + '_' + hasVertexColors;
+					let material = state.materials[ materialHash ];
+
+					if ( this.materials !== null ) {
+
+						material = this.materials.create( sourceMaterial.name );
+
+						// mtl etc. loaders probably can't create line materials correctly, copy properties to a line material.
+						if ( isLine && material && ! ( material instanceof three__WEBPACK_IMPORTED_MODULE_0__.LineBasicMaterial ) ) {
+
+							const materialLine = new three__WEBPACK_IMPORTED_MODULE_0__.LineBasicMaterial();
+							three__WEBPACK_IMPORTED_MODULE_0__.Material.prototype.copy.call( materialLine, material );
+							materialLine.color.copy( material.color );
+							material = materialLine;
+
+						} else if ( isPoints && material && ! ( material instanceof three__WEBPACK_IMPORTED_MODULE_0__.PointsMaterial ) ) {
+
+							const materialPoints = new three__WEBPACK_IMPORTED_MODULE_0__.PointsMaterial( { size: 10, sizeAttenuation: false } );
+							three__WEBPACK_IMPORTED_MODULE_0__.Material.prototype.copy.call( materialPoints, material );
+							materialPoints.color.copy( material.color );
+							materialPoints.map = material.map;
+							material = materialPoints;
+
+						}
+
+					}
+
+					if ( material === undefined ) {
+
+						if ( isLine ) {
+
+							material = new three__WEBPACK_IMPORTED_MODULE_0__.LineBasicMaterial();
+
+						} else if ( isPoints ) {
+
+							material = new three__WEBPACK_IMPORTED_MODULE_0__.PointsMaterial( { size: 1, sizeAttenuation: false } );
+
+						} else {
+
+							material = new three__WEBPACK_IMPORTED_MODULE_0__.MeshPhongMaterial();
+
+						}
+
+						material.name = sourceMaterial.name;
+						material.flatShading = sourceMaterial.smooth ? false : true;
+						material.vertexColors = hasVertexColors;
+
+						state.materials[ materialHash ] = material;
+
+					}
+
+					createdMaterials.push( material );
+
+				}
+
+				// Create mesh
+
+				let mesh;
+
+				if ( createdMaterials.length > 1 ) {
+
+					for ( let mi = 0, miLen = materials.length; mi < miLen; mi ++ ) {
+
+						const sourceMaterial = materials[ mi ];
+						buffergeometry.addGroup( sourceMaterial.groupStart, sourceMaterial.groupCount, mi );
+
+					}
+
+					if ( isLine ) {
+
+						mesh = new three__WEBPACK_IMPORTED_MODULE_0__.LineSegments( buffergeometry, createdMaterials );
+
+					} else if ( isPoints ) {
+
+						mesh = new three__WEBPACK_IMPORTED_MODULE_0__.Points( buffergeometry, createdMaterials );
+
+					} else {
+
+						mesh = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh( buffergeometry, createdMaterials );
+
+					}
+
+				} else {
+
+					if ( isLine ) {
+
+						mesh = new three__WEBPACK_IMPORTED_MODULE_0__.LineSegments( buffergeometry, createdMaterials[ 0 ] );
+
+					} else if ( isPoints ) {
+
+						mesh = new three__WEBPACK_IMPORTED_MODULE_0__.Points( buffergeometry, createdMaterials[ 0 ] );
+
+					} else {
+
+						mesh = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh( buffergeometry, createdMaterials[ 0 ] );
+
+					}
+
+				}
+
+				mesh.name = object.name;
+
+				container.add( mesh );
+
+			}
+
+		} else {
+
+			// if there is only the default parser state object with no geometry data, interpret data as point cloud
+
+			if ( state.vertices.length > 0 ) {
+
+				const material = new three__WEBPACK_IMPORTED_MODULE_0__.PointsMaterial( { size: 1, sizeAttenuation: false } );
+
+				const buffergeometry = new three__WEBPACK_IMPORTED_MODULE_0__.BufferGeometry();
+
+				buffergeometry.setAttribute( 'position', new three__WEBPACK_IMPORTED_MODULE_0__.Float32BufferAttribute( state.vertices, 3 ) );
+
+				if ( state.colors.length > 0 && state.colors[ 0 ] !== undefined ) {
+
+					buffergeometry.setAttribute( 'color', new three__WEBPACK_IMPORTED_MODULE_0__.Float32BufferAttribute( state.colors, 3 ) );
+					material.vertexColors = true;
+
+				}
+
+				const points = new three__WEBPACK_IMPORTED_MODULE_0__.Points( buffergeometry, material );
+				container.add( points );
+
+			}
+
+		}
+
+		return container;
+
+	}
 
 }
 

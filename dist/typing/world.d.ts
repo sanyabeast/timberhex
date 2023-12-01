@@ -1,4 +1,4 @@
-import { BlockType } from "./blocks";
+import { EBlockShape, EBlockType } from "./blocks";
 import { EBlockReplacingStrategy, IBlockCreationRule, IBlockPlacement } from "./rules";
 export declare class WorldManager {
     static instance: WorldManager;
@@ -15,7 +15,7 @@ export declare class WorldManager {
     _cleanChunk(cx: number, cz: number): void;
     _testReplaceRestrictions(x: number, y: number, z: number, creationRule: IBlockCreationRule): boolean;
     _placeStructure(x: number, y: number, z: number, structure: IBlockPlacement[], replaceStrategy: EBlockReplacingStrategy): void;
-    _placeBlock(x: any, y: any, z: any, blockType: BlockType, replaceStrategy: EBlockReplacingStrategy): void;
+    _placeBlock(x: any, y: any, z: any, blockType: EBlockType, replaceStrategy: EBlockReplacingStrategy, shape: EBlockShape): void;
     _getBlocksRatioForRule(x: number, z: number, creationRule: IBlockCreationRule): number;
     _updateChunkLighting(cx: number, cz: number): void;
 }
