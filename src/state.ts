@@ -41,7 +41,7 @@ export const state: IAppState = {
     timeDelta: 0,
     seed: 454,
     chunkSize: 12,
-    drawChunks: 3,
+    drawChunks: 2,
     // blockShape: EBlockShape.Prism6,
     worldHeight: 8,
     scene: null,
